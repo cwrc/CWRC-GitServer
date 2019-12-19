@@ -4,7 +4,7 @@ FROM node
 
 RUN npm install pm2 -g
 
-WORKDIR /apps/cwrc-gitserver
+WORKDIR /apps/CWRC-GitServer
 
 COPY . .
 
