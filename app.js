@@ -4,7 +4,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const config = require('./config.js');
+const config = require('./config.json');
 
 const github = require('./routes/github');
 const schemaRouter = require('./routes/schema');

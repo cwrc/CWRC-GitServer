@@ -62,7 +62,7 @@ Express router to mount GitHub related functions on.
 
 Route that redirects to GitHub in order to use OAuth.
 
-**Kind**: static method of [`router`](#module_routes/github..router)  z
+**Kind**: static method of [`router`](#module_routes/github..router)
 <a name="module_routes/github..router.get/callback"></a>
 
 #### router.get/callback()
@@ -322,7 +322,7 @@ Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#searchRepos](https://
 
 ### routes/github~config : `object`
 
-The CWRC-GitServer config object, located at [https://github.com/cwrc/CWRC-GitServer/blob/master/config.js](https://github.com/cwrc/CWRC-GitServer/blob/master/config.js).
+The CWRC-GitServer config object, located at [https://github.com/cwrc/CWRC-GitServer/blob/master/config.json](https://github.com/cwrc/CWRC-GitServer/blob/master/config.json).
 
 **Kind**: inner namespace of [`routes/github`](#module_routes/github)  
 **Properties**

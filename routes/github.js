@@ -30,7 +30,7 @@ var cwrcGit = require('cwrcgit');
  * @property {String} personal_oath_for_testing OAuth ID to use for running tests
  * @property {String} jwt_secret_for_testing JWT secret to use for running tests
  */
-var config = require('../config.js');
+var config = require('../config.json');
 
 function isGithubClientCORS() {
 	return config.github_client_cors

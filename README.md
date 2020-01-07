@@ -53,7 +53,7 @@ Next you'll need to [create an OAuth app](https://developer.github.com/apps/buil
 
 ### Config
 
-Once you have the client ID and client secret for your OAuth app, you'll need to edit the [config.js file](https://github.com/cwrc/CWRC-GitServer/blob/master/config.js). The following fields need to customized:
+Once you have the client ID and client secret for your OAuth app, you'll need to edit the [config.json file](https://github.com/cwrc/CWRC-GitServer/blob/master/config.json). The following fields need to customized:
 
 #### github_client_cors
 
