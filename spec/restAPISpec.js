@@ -1,8 +1,8 @@
-let nock = require("nock");
+let nock = require('nock');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let should = chai.should();
-let config = require('../config');
+let config = require('../config.json');
 let fixtures = require('../fixturesAndMocks/fixtures.js');
 let mocks = require('../fixturesAndMocks/mocks.js');
 let server = require('../app.js');
@@ -17,228 +17,232 @@ chai.use(chaiHttp);
 // above.)  See https://github.com/node-nock/nock for full details.
 //nock.recorder.rec();
 
-describe("CWRCWriter Server Side API", function() {
+describe('CWRCWriter Server Side API', function () {
 
-        // get repo contents using Github recursive option
-    describe("GET '/repos/:owner/:repo", function() {
-	    beforeEach(function () {
-		    mocks.getRepoGetTree()
-        mocks.masterBranchSHAs()
-	    });
+	// get repo contents using Github recursive option
+	describe("GET '/repos/:owner/:repo", function () {
+		beforeEach(function () {
+			mocks.getRepoGetTree()
+			mocks.masterBranchSHAs()
+		});
 
-	    it("returns status code 200", function (done) {
-		    chai.request(server)
-			    .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}`)
-			    .set('cwrc-token', fixtures.githubToken)
-			    .end((err, res) => {
-				    res.should.have.status(200);
-				    done();
-			    });
-	    });
-    });
-    
-    // get repo contents by 'manually' drilling down through subdirs
-    describe(" GET github/repos/:owner/:repo/full", function() {
-	    beforeEach(function() {
-		   repoFullMocks()
-	    });
+		it('returns status code 200', function (done) {
+			chai.request(server)
+				.get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}`)
+				.set('cwrc-token', fixtures.githubToken)
+				.end((err, res) => {
+					res.should.have.status(200);
+					done();
+				});
+		});
+	});
 
-	    it("returns status code 200", function(done) {
-		    chai.request(server)
-			    .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/full`)
-			    .set('cwrc-token', fixtures.githubToken)
-			    .end((err, res) => {
-				    res.should.have.status(200);
-				    done();
-			    });
-	    });
-    })
+	// get repo contents by 'manually' drilling down through subdirs
+	describe('GET github/repos/:owner/:repo/full', function () {
+		beforeEach(function () {
+			repoFullMocks()
+		});
 
-  // get doc
-   describe("GET github/repos/${fixtures.owner}/${fixtures.testRepo}/contents", function() {
+		it('returns status code 200', function (done) {
+			chai.request(server)
+				.get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/full`)
+				.set('cwrc-token', fixtures.githubToken)
+				.end((err, res) => {
+					res.should.have.status(200);
+					done();
+				});
+		});
+	})
 
-    beforeEach(function() {
-        mocks.getDoc()
-    });
+	// get doc
+	describe('GET github/repos/${fixtures.owner}/${fixtures.testRepo}/contents', function () {
 
-    it("returns status code 200", function(done) {
-       chai.request(server)
-            .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/contents`)
-            .set('cwrc-token', fixtures.githubToken)
-           .query({branch: 'jchartrand', path: "curt/qurt/test.txt"})
-            .end((err, res) => {
-              res.should.have.status(200);
-              done();
-            });
-    });
-  });
+		beforeEach(function () {
+			mocks.getDoc()
+		});
 
-   // get repos for given user
-   describe("GET github/${fixtures.owner}/repos", function() {
+		it('returns status code 200', function (done) {
+			chai.request(server)
+				.get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/contents`)
+				.set('cwrc-token', fixtures.githubToken)
+				.query({
+					branch: 'jchartrand',
+					path: 'curt/qurt/test.txt'
+				})
+				.end((err, res) => {
+					res.should.have.status(200);
+					done();
+				});
+		});
+	});
 
-    beforeEach(function() {
-      var getReposForGithubUserNock = mocks.getReposForGithubUserNock();
-    });
+	// get repos for given user
+	describe('GET github/${fixtures.owner}/repos', function () {
 
-    it("returns correctly", function(done) {
-       chai.request(server)
-            .get(`/github/users/${fixtures.owner}/repos`)
-            .set('cwrc-token', fixtures.githubToken)
-            .end((err, res) => {
-              res.should.have.status(200);
-              res.body.data[0].owner.login.should.eq(fixtures.owner);
-              done();
-            });
-    });
-  });
+		beforeEach(function () {
+			var getReposForGithubUserNock = mocks.getReposForGithubUserNock();
+		});
 
-   // get repos for authenticated user
-   describe("GET github/user/repos", function() {
-  
-    beforeEach(function() {
-      var getReposForAuthenticatedUserNock = mocks.getReposForAuthenticatedUserNock();
-    });
+		it('returns correctly', function (done) {
+			chai.request(server)
+				.get(`/github/users/${fixtures.owner}/repos`)
+				.set('cwrc-token', fixtures.githubToken)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.data[0].owner.login.should.eq(fixtures.owner);
+					done();
+				});
+		});
+	});
 
-     it("returns correctly", function(done) {
-       chai.request(server)
-            .get(`/github/user/repos`)
-            .set('cwrc-token', fixtures.githubToken)
-            .end((err, res) => {
-              res.should.have.status(200);
-              res.body.data[0].name.should.eq(fixtures.testRepo);
-              done();
-            });
-    });
-  });
+	// get repos for authenticated user
+	describe('GET github/user/repos', function () {
 
-   // create new repo
-   describe("POST /user/repos", function() {
-    
-    let data =
-          {
-          repo: fixtures.testRepo,
-          isPrivate: fixtures.isPrivate,
-          description: fixtures.testRepoDescription
-        };
+		beforeEach(function () {
+			var getReposForAuthenticatedUserNock = mocks.getReposForAuthenticatedUserNock();
+		});
 
-    beforeEach(function() {
-      mocks.getCreateGithubRepoNock();
-    });
+		it('returns correctly', function (done) {
+			chai.request(server)
+				.get('/github/user/repos')
+				.set('cwrc-token', fixtures.githubToken)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.data[0].name.should.eq(fixtures.testRepo);
+					done();
+				});
+		});
+	});
 
-    it("returns correctly", function (done) {
-        chai.request(server)
-            .post(`/github/user/repos`)
-            .set('cwrc-token', fixtures.githubToken)
-            .send(data)
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.owner.should.eq(fixtures.owner);
-                res.body.repo.should.eq(fixtures.testRepo);
-              done();
-            });
-    });
+	// create new repo
+	describe('POST /user/repos', function () {
 
-  });
+		let data = {
+			repo: fixtures.testRepo,
+			isPrivate: fixtures.isPrivate,
+			description: fixtures.testRepoDescription
+		};
+
+		beforeEach(function () {
+			mocks.getCreateGithubRepoNock();
+		});
+
+		it('returns correctly', function (done) {
+			chai.request(server)
+				.post('/github/user/repos')
+				.set('cwrc-token', fixtures.githubToken)
+				.send(data)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.owner.should.eq(fixtures.owner);
+					res.body.repo.should.eq(fixtures.testRepo);
+					done();
+				});
+		});
+
+	});
 	//nock.recorder.rec();
-   // save doc
-  describe("PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/doc", function() {
+	// save doc
+	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/doc', function () {
 
-	  let data = {
-		  owner: fixtures.owner,
-		  repo: fixtures.testRepo,
-		  content: fixtures.testDoc,
-		  message: 'some commit message',
-		  branch: 'jchartrand',
-		  path: 'curt/qurt/test.txt'
-	  }
+		let data = {
+			owner: fixtures.owner,
+			repo: fixtures.testRepo,
+			content: fixtures.testDoc,
+			message: 'some commit message',
+			branch: 'jchartrand',
+			path: 'curt/qurt/test.txt'
+		}
 
-	  beforeEach(function () {
-		  mocks.saveDocExistingSHA()
-		  mocks.saveDoc()
-	  });
+		beforeEach(function () {
+			mocks.saveDocExistingSHA()
+			mocks.saveDoc()
+		});
 
-	  it("returns correctly", function (done) {
+		it('returns correctly', function (done) {
 
-		  chai.request(server)
-			  .put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/doc`)
-			  .set('cwrc-token', fixtures.githubToken)
-			  .send(data)
-			  .end((err, res) => {
-				  res.should.have.status(200);
-				  res.body.sha.should.exist
-				  done();
-			  });
-	  });
-  })
+			chai.request(server)
+				.put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/doc`)
+				.set('cwrc-token', fixtures.githubToken)
+				.send(data)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.sha.should.exist
+					done();
+				});
+		});
+	})
 
-	 // nock.recorder.rec();
-	  // save doc in branch and issue pull request
-	  describe("PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/pr", function() {
+	// nock.recorder.rec();
+	// save doc in branch and issue pull request
+	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/pr', function () {
 
-		  let data = {
-			  owner: fixtures.owner,
-			  repo: fixtures.testRepo,
-			  content: fixtures.testDoc,
-			  message: 'some commit message',
-			  title: 'a title for the pull request',
-			  branch: 'jchartrand',
-			  path: 'curt/qurt/test.txt'
-		  }
+		let data = {
+			owner: fixtures.owner,
+			repo: fixtures.testRepo,
+			content: fixtures.testDoc,
+			message: 'some commit message',
+			title: 'a title for the pull request',
+			branch: 'jchartrand',
+			path: 'curt/qurt/test.txt'
+		}
 
-		  beforeEach(function () {
-			  prMocks()
-		  });
+		beforeEach(function () {
+			prMocks()
+		});
 
-		  it("returns correctly", function (done) {
+		it('returns correctly', function (done) {
 
-			  chai.request(server)
-				  .put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/pr`)
-				  .set('cwrc-token', fixtures.githubToken)
-				  .send(data)
-				  .end((err, res) => {
-					  res.should.have.status(200);
-					  res.body.sha.should.exist
-					  done();
-				  });
-		  });
-	  });
-    // get details for authenticated user
-  describe("GET github/users", function() {
+			chai.request(server)
+				.put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/pr`)
+				.set('cwrc-token', fixtures.githubToken)
+				.send(data)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.sha.should.exist
+					done();
+				});
+		});
+	});
+	// get details for authenticated user
+	describe('GET github/users', function () {
 
-    beforeEach(function() {
-      var getDetailsForAuthenticatedUserNock = mocks.getDetailsForAuthenticatedUserNock();
-    });
+		beforeEach(function () {
+			var getDetailsForAuthenticatedUserNock = mocks.getDetailsForAuthenticatedUserNock();
+		});
 
-    it("returns correctly", function(done) {
-       chai.request(server)
-            .get(`/github/users`)
-            .set('cwrc-token', fixtures.githubToken)
-            .end((err, res) => {
-              res.should.have.status(200);
-              res.body.data.login.should.eq(fixtures.owner);
-              done();
-            });
-    });
-  });
+		it('returns correctly', function (done) {
+			chai.request(server)
+				.get('/github/users')
+				.set('cwrc-token', fixtures.githubToken)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.data.login.should.eq(fixtures.owner);
+					done();
+				});
+		});
+	});
 
-    // search
-  describe("GET github/search/code", function() {
+	// search
+	describe('GET github/search/code', function () {
 
-    beforeEach(function() {
-      var getSearchNock = mocks.getSearchNock();
-    });
+		beforeEach(function () {
+			var getSearchNock = mocks.getSearchNock();
+		});
 
-    it("returns correctly", function(done) {
-       chai.request(server)
-            .get(`/github/search/code`)
-            .set('cwrc-token', fixtures.githubToken)
-            .query({q: 'cwrc-melbourne+repo:jchartrand/cleanDoc2'}) 
-            .end((err, res) => {
-              res.should.have.status(200);
-              res.body.data.total_count.should.eq(1);
-              done();
-            });
-    });
-  });
+		it('returns correctly', function (done) {
+			chai.request(server)
+				.get('/github/search/code')
+				.set('cwrc-token', fixtures.githubToken)
+				.query({
+					q: 'cwrc-melbourne+repo:jchartrand/cleanDoc2'
+				})
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.data.total_count.should.eq(1);
+					done();
+				});
+		});
+	});
 
 });
