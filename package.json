@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "GPL-2.0",
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
     "test:debug": "mocha spec -w",
     "test": "nyc mocha spec",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
