@@ -1,7 +1,25 @@
 {
   "name": "cwrc-server",
   "version": "0.0.0",
+  "description": "node.js Express server acting as a proxy between cwrc-git-dialogs and the GitHub API",
+  "keywords": [
+    "cwrc",
+    "cwrc-git-writer",
+    "cwrc-git-dialogs",
+    "github"
+  ],
+  "homepage": "https://github.com/cwrc/CWRC-GitServer",
+  "bugs": { "url": "https://github.com/cwrc/CWRC-GitWriter/issues"},
   "license": "GPL-2.0",
+  "contributors": [
+    "James Chartrand",
+    "Andrew MacDonald",
+    "Luciano Frizzera"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cwrc/CWRC-GitServer.git"
+  },
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
@@ -11,10 +29,6 @@
     "check-coverage": "nyc check-coverage",
     "docs": "jsdoc2md routes/github.js > API.md",
     "cm": "git-cz"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/cwrc/CWRC-GitServer.git"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -42,14 +56,14 @@
     "nodemon": "^2.0.2",
     "nyc": "^15.0.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run test && npm run check-coverage"
-    }
-  },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test && npm run check-coverage"
     }
   },
   "nyc": {
