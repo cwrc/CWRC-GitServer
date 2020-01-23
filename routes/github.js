@@ -3,16 +3,16 @@
  * @module routes/github
  */
 
-var express = require('express');
+const express = require('express');
 /**
  * Express router to mount GitHub related functions on.
  * @namespace router
  */
-var router = express.Router();
-var request = require('request')
-var debug = require('debug')('cwrc-server:server');
-var qs = require('querystring');
-var cwrcGit = require('cwrcgit');
+const router = express.Router();
+const request = require('request')
+const debug = require('debug')('cwrc-server:server');
+const qs = require('querystring');
+const cwrcGit = require('cwrcgit');
 
 /**
  * The CWRC-GitServer config object, located at {@link https://github.com/cwrc/CWRC-GitServer/blob/master/config.js}.
@@ -30,7 +30,7 @@ var cwrcGit = require('cwrcgit');
  * @property {String} personal_oath_for_testing OAuth ID to use for running tests
  * @property {String} jwt_secret_for_testing JWT secret to use for running tests
  */
-var config = require('../config.json');
+const config = require('../config.json');
 
 function isGithubClientCORS() {
 	return config.github_client_cors
@@ -135,7 +135,7 @@ router.use(handleAuthentication);
  * @memberof module:routes/github~router
  */
 router.get('/authenticate', function(req, res, next) {
-	var githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${getGithubClientId()}&scope=repo&redirect_uri=${getGithubOauthCallback()}`;
+	const githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${getGithubClientId()}&scope=repo&redirect_uri=${getGithubOauthCallback()}`;
 	res.redirect(githubAuthURL);
 });
 
@@ -152,18 +152,18 @@ router.get('/callback', function(req, res, next) {
 		// do something here, although this shouldn't ever be the case.
 	} else {
 
-		var code = req.query.code;
-		var params = '?code=' + code
+		const code = req.query.code;
+		const params = '?code=' + code
 			+ '&client_id=' + getGithubClientId()
 			+ '&client_secret=' + getGithubClientSecret()
 
-		var uri = 'https://github.com/login/oauth/access_token'+params;
+		const uri = 'https://github.com/login/oauth/access_token'+params;
 
 		request.post(uri, function(err, resp, body) {
 			if (err) {
 				res.send(err.message);
 			} else {
-				var githubOauthToken = (qs.parse(body)).access_token;
+				const githubOauthToken = (qs.parse(body)).access_token;
 				cwrcGit.authenticate(githubOauthToken);
 				res.cookie('cwrc-token', githubOauthToken);
 				res.redirect(getAuthenticationCallbackRedirect());
@@ -201,7 +201,7 @@ router.get('/repos/:owner/:repo/contents', function({params: {owner, repo}, quer
  * @param {Boolean} [req.body.isPrivate=false] Is the repo private?
  */
 router.post('/user/repos', function({body}, res, next) {
-	var {repo, description, isPrivate = false} = body;
+	const {repo, description, isPrivate = false} = body;
 	if (!repo) {
 		res.status(422).send('You need at least a name for your document!')
 	} else {
@@ -225,7 +225,7 @@ router.post('/user/repos', function({body}, res, next) {
  * @param {String} [req.body.sha] The commit SHA
  */
 router.put('/repos/:owner/:repo/doc', function({params: {owner, repo}, body}, res, next) {
-	var {path, content, branch, message, sha} = body;
+	const {path, content, branch, message, sha} = body;
 	res.handlePromise(cwrcGit.saveDoc(owner, repo, path, content, branch, message, sha));
 });
 
@@ -246,7 +246,7 @@ router.put('/repos/:owner/:repo/doc', function({params: {owner, repo}, body}, re
  * @param {String} [req.body.sha] The commit SHA
  */
 router.put('/repos/:owner/:repo/pr', function({params: {owner, repo}, body}, res, next) {
-	var {path, content, branch, message, title, sha} = body;
+	const {path, content, branch, message, title, sha} = body;
 	res.handlePromise(cwrcGit.saveAsPullRequest(owner, repo, path, content, branch, message, title, sha));
 });
 
@@ -374,7 +374,7 @@ router.get('/orgs/:org', function({params: {org}}, res, next) {
  * @param {Boolean} [req.body.isPrivate=false] Is the repo private?
  */
 router.post('/orgs/:org/repos', function({params: {org}, body}, res, next) {
-	var {repo, description, isPrivate = false} = body;
+	const {repo, description, isPrivate = false} = body;
 	if (!repo) {
 		res.status(422).send('You need at least a name for your document!')
 	} else {
@@ -391,10 +391,10 @@ router.post('/orgs/:org/repos', function({params: {org}, body}, res, next) {
  * @memberof module:routes/github~router
  */
 router.get('/templates', function(req, res, next) {
-	var owner = getTemplatesOwner();
-	var repo = getTemplatesRepo();
-	var ref = getTemplatesRef();
-	var path = getTemplatesPath();
+	const owner = getTemplatesOwner();
+	const repo = getTemplatesRepo();
+	const ref = getTemplatesRef();
+	const path = getTemplatesPath();
 	res.handlePromise(cwrcGit.getTemplates(owner, repo, ref, path))
 });
 
