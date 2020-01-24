@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "description": "node.js Express server acting as a proxy between cwrc-git-dialogs and the GitHub API",
   "keywords": [
-    "cwrc",
-    "cwrc-git-writer",
-    "cwrc-git-dialogs",
+    "xml",
+    "rdf",
+    "editor",
     "github"
   ],
   "homepage": "https://github.com/cwrc/CWRC-GitServer",
@@ -14,9 +14,9 @@
   },
   "license": "GPL-2.0",
   "contributors": [
-    "James Chartrand",
-    "Andrew MacDonald",
-    "Luciano Frizzera"
+    "James Chartrand <jc.chartrand@gmail.com>",
+    "Andrew MacDonald <andrewjames.code@gmail.com>",
+    "Luciano Frizzera <lucaju@gmail.com>"
   ],
   "repository": {
     "type": "git",
@@ -51,7 +51,7 @@
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.8.0",
-    "husky": "^4.2.0",
+    "husky": "^4.2.1",
     "jsdoc-to-markdown": "^5.0.0",
     "mocha": "^7.0.0",
     "nock": "^9.6.1",
