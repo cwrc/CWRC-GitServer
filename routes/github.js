@@ -30,7 +30,7 @@ var cwrcGit = require('cwrcgit');
  * @property {String} personal_oath_for_testing OAuth ID to use for running tests
  * @property {String} jwt_secret_for_testing JWT secret to use for running tests
  */
-var config = require('../config.js');
+var config = require('../config.json');
 
 function isGithubClientCORS() {
 	return config.github_client_cors
@@ -82,20 +82,20 @@ function handleResponsePromise(request, response, next) {
 		response.header('Access-Control-Allow-Credentials', 'true');
 	}
 
-    response.handlePromise = function(promise) {
-        promise.then(function(result) {
-            response.send(result);
-        }).catch(function(error) {
-        	if (error.code === 404) {
+	response.handlePromise = function(promise) {
+		promise.then(function(result) {
+			response.send(result);
+		}).catch(function(error) {
+			if (error.code === 404) {
 				response.status(404).send('Not Found')
-	        } else {
-		        console.log('Server error:', error);
-		        debug(error);
-		        response.status(500).send(error);
-	        }
-        });
-    }
-    next();
+			} else {
+				console.log('Server error:', error);
+				debug(error);
+				response.status(500).send(error);
+			}
+		});
+	}
+	next();
 }
 router.use(handleResponsePromise);
 
@@ -111,20 +111,20 @@ router.use(handleResponsePromise);
  */
 function handleAuthentication(req,res,next) {
 
-    const githubToken = req.headers['cwrc-token'];
-    if (githubToken) {
-	    cwrcGit.authenticate(githubToken);
-	    req.githubAuthenticated = true;
-	    next();
+	const githubToken = req.headers['cwrc-token'];
+	if (githubToken) {
+		cwrcGit.authenticate(githubToken);
+		req.githubAuthenticated = true;
+		next();
 	} else {
 		req.githubAuthenticated = false;
 		next();
 	}
 	/*the above could be used later in certain routes like so:
 	if(!req.githubAuthenticated) {
-        return res.redirect('/login');
-    }
-    */
+		return res.redirect('/login');
+	}
+	*/
 }
 router.use(handleAuthentication);
 
@@ -149,28 +149,28 @@ router.get('/authenticate', function(req, res, next) {
  */
 router.get('/callback', function(req, res, next) {
 	if (!req.query.code) {
-    	// do something here, although this shouldn't ever be the case.
-  	} else {
+		// do something here, although this shouldn't ever be the case.
+	} else {
 
-    	var code = req.query.code;
-    	var params = '?code=' + code
-                  + '&client_id=' + getGithubClientId()
-                  + '&client_secret=' + getGithubClientSecret()
+		var code = req.query.code;
+		var params = '?code=' + code
+			+ '&client_id=' + getGithubClientId()
+			+ '&client_secret=' + getGithubClientSecret()
 
-    	var uri = 'https://github.com/login/oauth/access_token'+params;
+		var uri = 'https://github.com/login/oauth/access_token'+params;
 
-    	request.post(uri, function(err, resp, body) {
-      		if (err) {
-      			res.send(err.message);
-		    } else {
-		    	var githubOauthToken = (qs.parse(body)).access_token;
-		        cwrcGit.authenticate(githubOauthToken);
-		        res.cookie('cwrc-token', githubOauthToken);
-			    res.redirect(getAuthenticationCallbackRedirect());
-		    }
-    	})
-  	} 
-  	 
+		request.post(uri, function(err, resp, body) {
+			if (err) {
+				res.send(err.message);
+			} else {
+				var githubOauthToken = (qs.parse(body)).access_token;
+				cwrcGit.authenticate(githubOauthToken);
+				res.cookie('cwrc-token', githubOauthToken);
+				res.redirect(getAuthenticationCallbackRedirect());
+			}
+		})
+	} 
+
 });
 
 /**
