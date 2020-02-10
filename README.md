@@ -1,6 +1,6 @@
-![Picture](http://cwrc.ca/logos/CWRC_logos_2016_versions/CWRCLogo-Horz-FullColour.png)
-
 # CWRC-GitServer
+
+![Picture](http://cwrc.ca/logos/CWRC_logos_2016_versions/CWRCLogo-Horz-FullColour.png)
 
 [![Travis](https://img.shields.io/travis/cwrc/CWRC-GitServer.svg)](https://travis-ci.org/cwrc/CWRC-GitServer)
 [![Codecov](https://img.shields.io/codecov/c/github/cwrc/CWRC-GitServer.svg)](https://codecov.io/gh/cwrc/CWRC-GitServer)

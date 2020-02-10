@@ -1,6 +1,6 @@
-<a name="module_routes/github"></a>
+# routes/github
 
-## routes/github
+<a name="module_routes/github"></a>
 
 Module providing GitHub related routes.
 
@@ -30,7 +30,7 @@ Module providing GitHub related routes.
 
 <a name="module_routes/github..router"></a>
 
-### routes/github~router : `object`
+## routes/github~router : `object`
 
 Express router to mount GitHub related functions on.
 
@@ -58,7 +58,7 @@ Express router to mount GitHub related functions on.
 
 <a name="module_routes/github..router.get/authenticate"></a>
 
-#### router.get/authenticate()
+### router.get/authenticate()
 
 Route that redirects to GitHub in order to use OAuth.
 
