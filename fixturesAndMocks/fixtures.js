@@ -1,7 +1,7 @@
-var config = require('../config');
-var jwt    = require('jsonwebtoken');
+const config = require('../config');
+const jwt    = require('jsonwebtoken');
 
-var testDoc = `<?xml version="1.0" encoding="UTF-8"?>
+const testDoc = `<?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cw="http://cwrc.ca/ns/cw#" xmlns:w="http://cwrctc.artsrn.ualberta.ca/#">
   <teiHeader>
     <fileDesc>
@@ -52,29 +52,29 @@ var testDoc = `<?xml version="1.0" encoding="UTF-8"?>
 </TEI>
 `;
 
-var owner = 'jchartrand';
-var testRepo = 'aTest';
-var ownerAndRepo = `${owner}/${testRepo}`;
+const owner = 'lucaju';
+const testRepo = 'misc';
+const ownerAndRepo = `${owner}/${testRepo}`;
 const templateName = 'Sample TEI letter.xml'
 var versionTimestamp = Math.floor(Date.now() / 1000);
-var base64TestDoc = Buffer.from(testDoc).toString('base64');
-var annotationBundleText = "some annotations";
-var base64AnnotationBundle = Buffer.from(annotationBundleText).toString('base64');
-var aSingleAnno = 'a single anno with timestamped uris ' + versionTimestamp;
-var testRepoDescription = "a description of the repo";
-var isPrivate = false;
+const base64TestDoc = Buffer.from(testDoc).toString('base64');
+const annotationBundleText = 'some annotations';
+const base64AnnotationBundle = Buffer.from(annotationBundleText).toString('base64');
+const aSingleAnno = 'a single anno with timestamped uris ' + versionTimestamp;
+const testRepoDescription = 'a description of the repo';
+const isPrivate = false;
 
-var baseTreeSHA = 'theBASETReeSHAForTesting';
-var parentCommitSHA = 'parentCommitSHAForTesting';
+const baseTreeSHA = 'theBASETReeSHAForTesting';
+const parentCommitSHA = 'parentCommitSHAForTesting';
 
-var newTreeSHA = 'newTreeSHAForTesting';
-var newCommitSHA = 'newCommitSHAForTesting';
+const newTreeSHA = 'newTreeSHAForTesting';
+const newCommitSHA = 'newCommitSHAForTesting';
 
-var commitMessage = 'saving cwrc draft';
+const commitMessage = 'saving cwrc draft';
 
-var cwrcJWTTokenContainingGithubOathToken = jwt.sign(config.personal_oath_for_testing, config.jwt_secret_for_testing);
+const cwrcJWTTokenContainingGithubOathToken = jwt.sign(config.personal_oath_for_testing, config.jwt_secret_for_testing);
  
-var githubToken = config.personal_oath_for_testing
+const githubToken = config.personal_oath_for_testing
 
 module.exports = {
 	testDoc: testDoc,

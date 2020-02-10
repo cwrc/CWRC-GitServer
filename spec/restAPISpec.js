@@ -1,32 +1,32 @@
-let nock = require('nock');
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let should = chai.should();
-let config = require('../config.json');
-let fixtures = require('../fixturesAndMocks/fixtures.js');
-let mocks = require('../fixturesAndMocks/mocks.js');
-let server = require('../app.js');
-let repoFullMocks = require('../fixturesAndMocks/repoFullMocks.js')
-let prMocks = require('../fixturesAndMocks/prMocks.js')
-let templateMocks = require('../fixturesAndMocks/templateMocks.js')
+const nock = require('nock');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const should = chai.should();
+// const config = require('../config.json');
+const fixtures = require('../fixturesAndMocks/fixtures.js');
+const mocks = require('../fixturesAndMocks/mocks.js');
+const server = require('../app.js');
+const repoFullMocks = require('../fixturesAndMocks/repoFullMocks.js')
+const prMocks = require('../fixturesAndMocks/prMocks.js')
+// const templateMocks = require('../fixturesAndMocks/templateMocks.js')
 chai.use(chaiHttp);
 
 // uncomment the line below to let calls through to Github, and have nock output the results
 // to the console, for use in nock.  I've put past nock recordings in /fixturesAndMocks/mocks.js,
 //  which nock now returns for calls to GitHub that it intercepts (by virtue of 'requiring' nock
 // above.)  See https://github.com/node-nock/nock for full details.
-//nock.recorder.rec();
+// nock.recorder.rec();
 
-describe('CWRCWriter Server Side API', function () {
+describe('CWRCWriter Server Side API', () => {
 
 	// get repo contents using Github recursive option
-	describe("GET '/repos/:owner/:repo", function () {
-		beforeEach(function () {
+	describe('GET /repos/:owner/:repo', () => {
+		beforeEach( () => {
 			mocks.getRepoGetTree()
 			mocks.masterBranchSHAs()
 		});
 
-		it('returns status code 200', function (done) {
+		it('returns status code 200', (done) => {
 			chai.request(server)
 				.get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}`)
 				.set('cwrc-token', fixtures.githubToken)
@@ -38,12 +38,12 @@ describe('CWRCWriter Server Side API', function () {
 	});
 
 	// get repo contents by 'manually' drilling down through subdirs
-	describe('GET github/repos/:owner/:repo/full', function () {
-		beforeEach(function () {
+	describe('GET github/repos/:owner/:repo/full', () => {
+		beforeEach( () => {
 			repoFullMocks()
 		});
 
-		it('returns status code 200', function (done) {
+		it('returns status code 200', (done) => {
 			chai.request(server)
 				.get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/full`)
 				.set('cwrc-token', fixtures.githubToken)
@@ -55,19 +55,19 @@ describe('CWRCWriter Server Side API', function () {
 	})
 
 	// get doc
-	describe('GET github/repos/${fixtures.owner}/${fixtures.testRepo}/contents', function () {
+	describe('GET github/repos/${fixtures.owner}/${fixtures.testRepo}/contents', () => {
 
-		beforeEach(function () {
+		beforeEach( () => {
 			mocks.getDoc()
 		});
 
-		it('returns status code 200', function (done) {
+		it('returns status code 200', (done) => {
 			chai.request(server)
 				.get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/contents`)
 				.set('cwrc-token', fixtures.githubToken)
 				.query({
-					branch: 'jchartrand',
-					path: 'curt/qurt/test.txt'
+					branch: 'dev',
+					path: 'text.txt'
 				})
 				.end((err, res) => {
 					res.should.have.status(200);
@@ -77,13 +77,13 @@ describe('CWRCWriter Server Side API', function () {
 	});
 
 	// get repos for given user
-	describe('GET github/${fixtures.owner}/repos', function () {
+	describe('GET github/${fixtures.owner}/repos', () => {
 
-		beforeEach(function () {
-			var getReposForGithubUserNock = mocks.getReposForGithubUserNock();
+		beforeEach( () => {
+			mocks.getReposForGithubUserNock();
 		});
 
-		it('returns correctly', function (done) {
+		it('returns correctly', (done) => {
 			chai.request(server)
 				.get(`/github/users/${fixtures.owner}/repos`)
 				.set('cwrc-token', fixtures.githubToken)
@@ -96,10 +96,10 @@ describe('CWRCWriter Server Side API', function () {
 	});
 
 	// get repos for authenticated user
-	describe('GET github/user/repos', function () {
+	describe('GET github/user/repos', () => {
 
-		beforeEach(function () {
-			var getReposForAuthenticatedUserNock = mocks.getReposForAuthenticatedUserNock();
+		beforeEach( () => {
+			mocks.getReposForAuthenticatedUserNock();
 		});
 
 		it('returns correctly', function (done) {
@@ -115,19 +115,19 @@ describe('CWRCWriter Server Side API', function () {
 	});
 
 	// create new repo
-	describe('POST /user/repos', function () {
+	describe('POST /user/repos', () => {
 
-		let data = {
+		const data = {
 			repo: fixtures.testRepo,
 			isPrivate: fixtures.isPrivate,
 			description: fixtures.testRepoDescription
 		};
 
-		beforeEach(function () {
+		beforeEach( () => {
 			mocks.getCreateGithubRepoNock();
 		});
 
-		it('returns correctly', function (done) {
+		it('returns correctly', (done) => {
 			chai.request(server)
 				.post('/github/user/repos')
 				.set('cwrc-token', fixtures.githubToken)
@@ -141,25 +141,27 @@ describe('CWRCWriter Server Side API', function () {
 		});
 
 	});
-	//nock.recorder.rec();
-	// save doc
-	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/doc', function () {
+	
+	// nock.recorder.rec();
 
-		let data = {
+	// save doc
+	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/doc', () => {
+
+		const data = {
 			owner: fixtures.owner,
 			repo: fixtures.testRepo,
 			content: fixtures.testDoc,
 			message: 'some commit message',
-			branch: 'jchartrand',
-			path: 'curt/qurt/test.txt'
+			branch: 'dev',
+			path: 'text.txt'
 		}
 
-		beforeEach(function () {
+		beforeEach( () => {
 			mocks.saveDocExistingSHA()
 			mocks.saveDoc()
 		});
 
-		it('returns correctly', function (done) {
+		it('returns correctly', (done) => {
 
 			chai.request(server)
 				.put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/doc`)
@@ -175,23 +177,23 @@ describe('CWRCWriter Server Side API', function () {
 
 	// nock.recorder.rec();
 	// save doc in branch and issue pull request
-	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/pr', function () {
+	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/pr', () => {
 
-		let data = {
+		const data = {
 			owner: fixtures.owner,
 			repo: fixtures.testRepo,
 			content: fixtures.testDoc,
 			message: 'some commit message',
 			title: 'a title for the pull request',
-			branch: 'jchartrand',
-			path: 'curt/qurt/test.txt'
+			branch: 'dev',
+			path: 'text.txt'
 		}
 
-		beforeEach(function () {
+		beforeEach( () => {
 			prMocks()
 		});
 
-		it('returns correctly', function (done) {
+		it('returns correctly', (done) => {
 
 			chai.request(server)
 				.put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/pr`)
@@ -202,16 +204,17 @@ describe('CWRCWriter Server Side API', function () {
 					res.body.sha.should.exist
 					done();
 				});
-		});
+		}).timeout(9000);
 	});
-	// get details for authenticated user
-	describe('GET github/users', function () {
 
-		beforeEach(function () {
-			var getDetailsForAuthenticatedUserNock = mocks.getDetailsForAuthenticatedUserNock();
+	// get details for authenticated user
+	describe('GET github/users', () => {
+
+		beforeEach( () => {
+			mocks.getDetailsForAuthenticatedUserNock();
 		});
 
-		it('returns correctly', function (done) {
+		it('returns correctly', (done) => {
 			chai.request(server)
 				.get('/github/users')
 				.set('cwrc-token', fixtures.githubToken)
@@ -224,13 +227,13 @@ describe('CWRCWriter Server Side API', function () {
 	});
 
 	// search
-	describe('GET github/search/code', function () {
+	describe('GET github/search/code', () => {
 
-		beforeEach(function () {
-			var getSearchNock = mocks.getSearchNock();
+		beforeEach( () => {
+			mocks.getSearchNock();
 		});
 
-		it('returns correctly', function (done) {
+		it('returns correctly', (done) => {
 			chai.request(server)
 				.get('/github/search/code')
 				.set('cwrc-token', fixtures.githubToken)
