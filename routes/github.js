@@ -2,16 +2,18 @@
  * Module providing GitHub related routes.
  * @module routes/github
  */
-
+const cwrcGit = require('cwrcgit');
+const debug = require('debug')('cwrc-server:server');
 const express = require('express');
+const got = require('got');
+
+const config = require('../config.json');
+
 /**
  * Express router to mount GitHub related functions on.
  * @namespace router
  */
 const router = express.Router();
-const got = require('got');
-const debug = require('debug')('cwrc-server:server');
-const cwrcGit = require('cwrcgit');
 
 /**
  * The CWRC-GitServer config object, located at {@link https://github.com/cwrc/CWRC-GitServer/blob/master/config.js}.
@@ -29,8 +31,6 @@ const cwrcGit = require('cwrcgit');
  * @property {String} personal_oath_for_testing OAuth ID to use for running tests
  * @property {String} jwt_secret_for_testing JWT secret to use for running tests
  */
-const config = require('../config.json');
-
 const isGithubClientCORS = () => config.github_client_cors
 const getGithubClientOrigin = () => config.github_client_origin
 const getGithubClientId = () => config.github_client_id

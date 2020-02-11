@@ -1,13 +1,12 @@
-const nock = require('nock');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-// const config = require('../config.json');
+
+const server = require('../app.js');
 const fixtures = require('../fixturesAndMocks/fixtures.js');
 const mocks = require('../fixturesAndMocks/mocks.js');
-const server = require('../app.js');
 const repoFullMocks = require('../fixturesAndMocks/repoFullMocks.js')
 const prMocks = require('../fixturesAndMocks/prMocks.js')
-// const templateMocks = require('../fixturesAndMocks/templateMocks.js')
+
 chai.should();
 chai.use(chaiHttp);
 
@@ -15,6 +14,7 @@ chai.use(chaiHttp);
 // to the console, for use in nock.  I've put past nock recordings in /fixturesAndMocks/mocks.js,
 //  which nock now returns for calls to GitHub that it intercepts (by virtue of 'requiring' nock
 // above.)  See https://github.com/node-nock/nock for full details.
+// const nock = require('nock');
 // nock.recorder.rec();
 
 describe('CWRCWriter Server Side API', () => {
@@ -141,8 +141,6 @@ describe('CWRCWriter Server Side API', () => {
 		}).timeout(9000);
 
 	});
-	
-	// nock.recorder.rec();
 
 	// save doc
 	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/doc', () => {
@@ -175,7 +173,6 @@ describe('CWRCWriter Server Side API', () => {
 		});
 	})
 
-	// nock.recorder.rec();
 	// save doc in branch and issue pull request
 	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/pr', () => {
 
