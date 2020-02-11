@@ -102,7 +102,7 @@ describe('CWRCWriter Server Side API', () => {
 			mocks.getReposForAuthenticatedUserNock();
 		});
 
-		it('returns correctly', function (done) {
+		it('returns correctly', (done) => {
 			chai.request(server)
 				.get('/github/user/repos')
 				.set('cwrc-token', fixtures.githubToken)
@@ -138,7 +138,7 @@ describe('CWRCWriter Server Side API', () => {
 					res.body.repo.should.eq(fixtures.testRepo);
 					done();
 				});
-		});
+		}).timeout(9000);
 
 	});
 	
@@ -238,11 +238,11 @@ describe('CWRCWriter Server Side API', () => {
 				.get('/github/search/code')
 				.set('cwrc-token', fixtures.githubToken)
 				.query({
-					q: 'cwrc-melbourne+repo:jchartrand/cleanDoc2'
+					q: 'test+repo:lucaju/misc'
 				})
 				.end((err, res) => {
 					res.should.have.status(200);
-					res.body.data.total_count.should.eq(1);
+					res.body.data.total_count.should.eq(2);
 					done();
 				});
 		});
