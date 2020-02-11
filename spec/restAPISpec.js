@@ -1,7 +1,6 @@
 const nock = require('nock');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const should = chai.should();
 // const config = require('../config.json');
 const fixtures = require('../fixturesAndMocks/fixtures.js');
 const mocks = require('../fixturesAndMocks/mocks.js');
@@ -9,6 +8,7 @@ const server = require('../app.js');
 const repoFullMocks = require('../fixturesAndMocks/repoFullMocks.js')
 const prMocks = require('../fixturesAndMocks/prMocks.js')
 // const templateMocks = require('../fixturesAndMocks/templateMocks.js')
+chai.should();
 chai.use(chaiHttp);
 
 // uncomment the line below to let calls through to Github, and have nock output the results

@@ -9,9 +9,8 @@ const express = require('express');
  * @namespace router
  */
 const router = express.Router();
-const request = require('request')
+const got = require('got');
 const debug = require('debug')('cwrc-server:server');
-const qs = require('querystring');
 const cwrcGit = require('cwrcgit');
 
 /**
@@ -61,18 +60,14 @@ const handleResponsePromise = (request, response, next) => {
 		response.header('Access-Control-Allow-Credentials', 'true');
 	}
 
-	response.handlePromise = (promise) => {
-		promise.then(function(result) {
-			response.send(result);
-		}).catch((error) => {
-			if (error.status === 404) {
-				response.status(404).send('Not Found')
-			} else {
+	response.handlePromise = async (promise) => {
+		const result = await promise
+			.catch((error) => {
 				console.log('Server error:', error);
 				debug(error);
 				response.status(500).send(error);
-			}
-		});
+			})
+		response.send(result);
 	}
 
 	next();
@@ -127,7 +122,7 @@ router.get('/authenticate', (req, res, next) => {
  * @function
  * @memberof module:routes/github~router
  */
-router.get('/callback', (req, res, next) => {
+router.get('/callback', async (req, res, next) => {
 	
 	if (!req.query.code) return; // do something here, although this shouldn't ever be the case.
 
@@ -138,16 +133,15 @@ router.get('/callback', (req, res, next) => {
 
 	const uri = `https://github.com/login/oauth/access_token${params}`;
 
-	request.post(uri, (err, resp, body) => {
-		if (err) {
-			res.send(err.message);
-		} else {
-			const githubOauthToken = (qs.parse(body)).access_token;
-			cwrcGit.authenticate(githubOauthToken);
-			res.cookie('cwrc-token', githubOauthToken);
-			res.redirect(getAuthenticationCallbackRedirect());
-		}
+	const body = await got(uri).json()
+		.catch( error =>  {
+		res.send(error.message);
 	})
+
+	const githubOauthToken = body.access_token;
+	cwrcGit.authenticate(githubOauthToken);
+	res.cookie('cwrc-token', githubOauthToken);
+	res.redirect(getAuthenticationCallbackRedirect());
 
 });
 

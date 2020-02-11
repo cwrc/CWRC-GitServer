@@ -5,9 +5,7 @@
 
 const express = require('express');
 const debug = require('debug')('cwrc-server:server');
-// const xmlparser = require('express-xml-bodyparser');
-// const xml = require('xml');
-const rpn = require('request-promise-native')
+const got = require('got');
 
 /**
  * Express router to mount schema related functions on.
@@ -42,11 +40,7 @@ router.use(httpHeaders);
  */
 const loadResource = async url => {
 
-    const res = await rpn({
-            url,
-            resolveWithFullResponse: true,
-            simple: false,
-        })
+    const res = await got(url)
         .catch( error =>  {
             console.log(error);
             debug(error)
@@ -73,7 +67,7 @@ router.get('/xml', async (req, res) => {
     
     const resourceURL = req.query.url;
 
-    //if there is not url, send 'no content HTTP Response'
+    //if there is no url, send 'no content HTTP Response'
     if (!resourceURL) res.status(204).send(); 
     
     const schema = await loadResource(resourceURL);
