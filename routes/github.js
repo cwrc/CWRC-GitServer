@@ -64,8 +64,8 @@ const handleResponsePromise = (request, response, next) => {
 	response.handlePromise = (promise) => {
 		promise.then(function(result) {
 			response.send(result);
-		}).catch(function(error) {
-			if (error.code === 404) {
+		}).catch((error) => {
+			if (error.status === 404) {
 				response.status(404).send('Not Found')
 			} else {
 				console.log('Server error:', error);
