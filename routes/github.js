@@ -63,9 +63,13 @@ const handleResponsePromise = (request, response, next) => {
 	response.handlePromise = async (promise) => {
 		const result = await promise
 			.catch((error) => {
-				console.log('Server error:', error);
-				debug(error);
-				response.status(500).send(error);
+				if (error.status === 404) {
+					response.status(404).send('Not Found')
+				} else {
+					console.log('Server error:', error);
+					debug(error);
+					response.status(500).send(error);
+				}
 			})
 		response.send(result);
 	}
