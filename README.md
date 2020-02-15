@@ -33,7 +33,7 @@ There are two approached to install the [sandbox version of the CWRC-GitWriter](
 
 1. Install the dockerized verion of Git-Server/Git-Writer. The instruction for this approach is descibed in the [CWRC-GitWriter-Docker repo](https://github.com/cwrc/CWRC-GitWriter-Docker).
 
-2. Manually install each component. Instruction are down below:
+2. Manually install each component. Instruction is down below:
 
 Install node.js on a server (one approach for ubuntu is described here: [https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 
