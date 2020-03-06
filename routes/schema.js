@@ -2,12 +2,9 @@
  * Module providing XML/CSS SCHEMAS related routes.
  * @module routes/schema
  */
-
-const express = require('express');
 const debug = require('debug')('cwrc-server:server');
-// const xmlparser = require('express-xml-bodyparser');
-// const xml = require('xml');
-const rpn = require('request-promise-native')
+const express = require('express');
+const got = require('got');
 
 /**
  * Express router to mount schema related functions on.
@@ -41,12 +38,7 @@ router.use(httpHeaders);
  * @param {String} url The uri to load
  */
 const loadResource = async url => {
-
-    const res = await rpn({
-            url,
-            resolveWithFullResponse: true,
-            simple: false,
-        })
+    const res = await got(url)
         .catch( error =>  {
             console.log(error);
             debug(error)
@@ -56,7 +48,6 @@ const loadResource = async url => {
         });
 
     return res;
-
 }
 
 
@@ -70,10 +61,9 @@ const loadResource = async url => {
  * @param {Object} req.query.url The xml schema uri
  */
 router.get('/xml', async (req, res) => {
-    
     const resourceURL = req.query.url;
 
-    //if there is not url, send 'no content HTTP Response'
+    //if there is no url, send 'no content HTTP Response'
     if (!resourceURL) res.status(204).send(); 
     
     const schema = await loadResource(resourceURL);
@@ -85,7 +75,6 @@ router.get('/xml', async (req, res) => {
     res.type('xml')
         .status(200)
         .send(schema.body);
-
 })
 
 /**
@@ -109,7 +98,6 @@ router.get('/xml', async (req, res) => {
  * @param {Object} req.query.url The css schema uri
  */
 router.get('/css', async (req, res) => {
-    
     const resourceURL = req.query.url;
 
     //if there is not url, send 'no content HTTP Response'
@@ -124,7 +112,6 @@ router.get('/css', async (req, res) => {
     res.type('css')
         .status(200)
         .send(schema.body);
-
 })
 
 

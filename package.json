@@ -1,7 +1,27 @@
 {
   "name": "cwrc-server",
   "version": "0.0.0",
+  "description": "node.js Express server acting as a proxy between cwrc-git-dialogs and the GitHub API",
+  "keywords": [
+    "xml",
+    "rdf",
+    "editor",
+    "github"
+  ],
+  "homepage": "https://github.com/cwrc/CWRC-GitServer",
+  "bugs": {
+    "url": "https://github.com/cwrc/CWRC-GitWriter/issues"
+  },
   "license": "GPL-2.0",
+  "contributors": [
+    "James Chartrand <jc.chartrand@gmail.com>",
+    "Andrew MacDonald <andrewjames.code@gmail.com>",
+    "Luciano Frizzera <lucaju@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cwrc/CWRC-GitServer.git"
+  },
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
@@ -12,44 +32,39 @@
     "docs": "jsdoc2md routes/github.js > API.md",
     "cm": "git-cz"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/cwrc/CWRC-GitServer.git"
-  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
-    "cwrcgit": "^4.0.0",
-    "debug": "^3.2.6",
+    "cwrcgit": "github:cwrc/CWRC-Git#development",
+    "debug": "^4.1.1",
     "express": "^4.17.1",
+    "got": "^10.6.0",
     "jsonwebtoken": "^8.5.1",
-    "morgan": "^1.9.1",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.8"
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
+    "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "codecov": "^3.5.0",
+    "codecov": "^3.6.5",
     "commitizen": "^4.0.3",
-    "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^6.6.0",
-    "husky": "^2.4.1",
-    "jsdoc-to-markdown": "^5.0.0",
-    "mocha": "^5.2.0",
-    "nock": "^9.6.1",
-    "nodemon": "^1.19.1",
-    "nyc": "^14.1.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run test && npm run check-coverage"
-    }
+    "cz-conventional-changelog": "^3.1.0",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.3",
+    "jsdoc-to-markdown": "^5.0.3",
+    "mocha": "^7.1.0",
+    "nock": "^12.0.2",
+    "nodemon": "^2.0.2",
+    "nyc": "^15.0.0"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test && npm run check-coverage"
     }
   },
   "nyc": {

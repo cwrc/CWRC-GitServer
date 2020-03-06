@@ -1,15 +1,17 @@
-var nock = require('nock');
-var config = require('../config');
-var fixtures = require('./fixtures.js');
+/* eslint-disable quotes */
+const nock = require('nock');
 
-function enableAllMocks() {
-	nock('https://api.github.com:443', {"encodedQueryParams":true})
-		.get('/repos/jchartrand/aTest/git/refs/heads/jchartrand')
-		.query({"access_token":config.personal_oath_for_testing})
-		.reply(200, ["1f8b0800000000000003a58ec10e82301044ffa567c3024204bec31fd8dd2e1622b669978321fcbb255e3c7830f132979979339b89329ae1d0044ed02698d961d4880f6b4e668df7ec3ad59006000c53719bd4ad54b05f204af09f79c0ab24859cc8d6779ea75958cdb099e43093f9cc225cb5d452d5d6a51d65245b777dd975c80dd6427dc97469f2157d06391a7e5926fde3da1b90e0e7e97d7f01cdfdf73926010000"], [ 'Server',
+const enableAllMocks = () => {
+
+	nock('https://api.github.com:443', {
+			"encodedQueryParams": true
+		})
+		.get('/repos/lucaju/misc/git/ref/heads%2Fdev')
+		.reply(200, ["1f8b08000000000000039d8e3d0f82301086ff4b67e351e54349dc581c08d1a8ab29d7434aa8105a8cc4f8df3de3e6645cdee1de8fe71e62a04aa46f755093d20e34ddc44c5c3b4d67a3d9cab33c3eda93cd9bad2c0ebba9c8f05ed87d", "ab2f9b0d07c7a1e550ed7def5200d59bf9c5f87a2ce7d85918a8ef1cb423aa66046b1c029b7cfd82756543e845fa10ae56bc1604cb2a5a9544611c4788182cc245156a1527898c484aacd6322855c2783ff5c40d8659e3ff7be7d375f033f5f97c01ec6665ba37010000"], [
+			'Server',
 			'GitHub.com',
 			'Date',
-			'Fri, 25 May 2018 16:48:41 GMT',
+			'Mon, 02 Mar 2020 20:57:27 GMT',
 			'Content-Type',
 			'application/json; charset=utf-8',
 			'Transfer-Encoding',
@@ -21,27 +23,27 @@ function enableAllMocks() {
 			'X-RateLimit-Limit',
 			'5000',
 			'X-RateLimit-Remaining',
-			'4987',
+			'4999',
 			'X-RateLimit-Reset',
-			'1527267709',
+			'1583186247',
 			'Cache-Control',
 			'private, max-age=60, s-maxage=60',
 			'Vary',
 			'Accept, Authorization, Cookie, X-GitHub-OTP',
 			'ETag',
-			'W/"9e1004fa1d318f5220e2693bab2127fd"',
+			'W/"1e0ea06ce5543c1d648ad29220acd9e3"',
 			'Last-Modified',
-			'Tue, 01 May 2018 13:10:09 GMT',
+			'Tue, 11 Feb 2020 21:32:03 GMT',
 			'X-Poll-Interval',
 			'300',
 			'X-OAuth-Scopes',
-			'repo',
+			'repo, user',
 			'X-Accepted-OAuth-Scopes',
 			'repo',
 			'X-GitHub-Media-Type',
 			'github.v3; format=json',
 			'Access-Control-Expose-Headers',
-			'ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval',
+			'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset',
 			'Access-Control-Allow-Origin',
 			'*',
 			'Strict-Transport-Security',
@@ -55,21 +57,86 @@ function enableAllMocks() {
 			'Referrer-Policy',
 			'origin-when-cross-origin, strict-origin-when-cross-origin',
 			'Content-Security-Policy',
-			'default-src \'none\'',
-			'X-Runtime-rack',
-			'0.044328',
+			"default-src 'none'",
+			'Vary',
+			'Accept-Encoding, Accept, X-Requested-With',
 			'Content-Encoding',
 			'gzip',
 			'X-GitHub-Request-Id',
-			'A450:3F8C:E3A8B9:1F0153A:5B083E69' ]);
+			'A2C5:18F9:13C9EA2:2958B4E:5E5D7337'
+		]);
 
-	nock('https://api.github.com:443', {"encodedQueryParams":true})
-		.post('/graphql', {"query":"{\n\t\t\trepository(owner: \"jchartrand\", name: \"aTest\") {\n\t\t\t\tobject(expression: \"jchartrand:curt/qurt/test.txt\") {\n\t\t\t\t\t... on Blob {\n\t\t\t\t\t\toid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}"})
-		.query({"access_token":config.personal_oath_for_testing})
-		.reply(200, ["1f8b08000000000000031dc74b0e80200c00d1bbf404d8624cb94da16d821b0cb231c4bbfb99d59b092a43204de876b4b38ed6afef5adead8c5f552101bb9095d5990c97bca2b26eae82ac5e62268dc4843104b8df1e44b3d74655000000"], [ 'Server',
+	nock('https://api.github.com:443', {
+			"encodedQueryParams": true
+		})
+		.post('/graphql', {
+			"query": "{\n\t\t\trepository(owner: \"lucaju\", name: \"misc\") {\n\t\t\t\tobject(expression: \"dev:text.txt\") {\n\t\t\t\t\t... on Blob {\n\t\t\t\t\t\toid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}"
+		})
+		.reply(200, ["1f8b08000000000000031dc74b0e80200c00d1bbf404082d25dca6b698e006836c0cf1ee7e66f56682c910c8137a39da5947ebd7776ddd8b8e5fd5204370c6689e12a257d648b4f8229bacc8483199b18b8ac1c1fdf600851e1c8555000000"], [
+			'Server',
 			'GitHub.com',
 			'Date',
-			'Fri, 25 May 2018 16:48:41 GMT',
+			'Mon, 02 Mar 2020 20:57:27 GMT',
+			'Content-Type',
+			'application/json; charset=utf-8',
+			'Transfer-Encoding',
+			'chunked',
+			'Connection',
+			'close',
+			'Status',
+			'200 OK',
+			'Cache-Control',
+			'no-cache',
+			'X-OAuth-Scopes',
+			'repo, user',
+			'X-Accepted-OAuth-Scopes',
+			'repo',
+			'X-GitHub-Media-Type',
+			'github.v3; format=json',
+			'X-RateLimit-Limit',
+			'5000',
+			'X-RateLimit-Remaining',
+			'4696',
+			'X-RateLimit-Reset',
+			'1583184574',
+			'Access-Control-Expose-Headers',
+			'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset',
+			'Access-Control-Allow-Origin',
+			'*',
+			'Strict-Transport-Security',
+			'max-age=31536000; includeSubdomains; preload',
+			'X-Frame-Options',
+			'deny',
+			'X-Content-Type-Options',
+			'nosniff',
+			'X-XSS-Protection',
+			'1; mode=block',
+			'Referrer-Policy',
+			'origin-when-cross-origin, strict-origin-when-cross-origin',
+			'Content-Security-Policy',
+			"default-src 'none'",
+			'Vary',
+			'Accept-Encoding, Accept, X-Requested-With',
+			'Content-Encoding',
+			'gzip',
+			'X-GitHub-Request-Id',
+			'903C:5A77:1317D0D:2853A68:5E5D7337'
+		]);
+
+	nock('https://api.github.com:443', {
+			"encodedQueryParams": true
+		})
+		.put('/repos/lucaju/misc/contents/text.txt', {
+			"message": "some commit message",
+			"sha": "30d74d258442c7c65512eafab474568dd706c430",
+			"branch": "dev",
+			"content": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPFRFSSB4bWxucz0iaHR0cDovL3d3dy50ZWktYy5vcmcvbnMvMS4wIiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiIHhtbG5zOmN3PSJodHRwOi8vY3dyYy5jYS9ucy9jdyMiIHhtbG5zOnc9Imh0dHA6Ly9jd3JjdGMuYXJ0c3JuLnVhbGJlcnRhLmNhLyMiPgogIDx0ZWlIZWFkZXI+CiAgICA8ZmlsZURlc2M+CiAgICAgIDx0aXRsZVN0bXQ+CiAgICAgICAgPHRpdGxlPlNhbXBsZSBEb2N1bWVudCBUaXRsZSB0ZXN0IHVuZGVmaW5lZDwvdGl0bGU+CiAgICAgIDwvdGl0bGVTdG10PgogICAgICA8cHVibGljYXRpb25TdG10PgogICAgICAgIDxwPjwvcD4KICAgICAgPC9wdWJsaWNhdGlvblN0bXQ+CiAgICAgIDxzb3VyY2VEZXNjIHNhbWVBcz0iaHR0cDovL3d3dy5jd3JjLmNhIj4KICAgICAgICA8cD5DcmVhdGVkIGZyb20gb3JpZ2luYWwgcmVzZWFyY2ggYnkgbWVtYmVycyBvZiBDV1JDL0NTw4lDIHVubGVzcyBvdGhlcndpc2Ugbm90ZWQuPC9wPgogICAgICA8L3NvdXJjZURlc2M+CiAgICA8L2ZpbGVEZXNjPgogIDwvdGVpSGVhZGVyPgogIDx0ZXh0PgogICAgPGJvZHk+CiAgICAgIDxkaXYgdHlwZT0ibGV0dGVyIj4KICAgICAgICA8aGVhZD4KICAgICAgICAgIDx0aXRsZT5TYW1wbGUgTGV0dGVyIC0gQmVydHJhbmQgUnVzc2VsbCB0byA8cGVyc05hbWUgYW5ub3RhdGlvbklkPSJlbnRfNzMiIGNlcnQ9InByb2JhYmxlIiByZWY9IjI3OTM5OTM5OSI+UGF0cmljaWEgU3BlbmNlPC9wZXJzTmFtZT4gLSBPY3RvYmVyIDIxLCAxOTM1PC90aXRsZT4KICAgICAgICA8L2hlYWQ+CiAgICAgICAgPG9wZW5lcj4KICAgICAgICAgIDxub3RlPgogICAgICAgICAgICA8cD5CYWQgd3JpdGluZyBkdWUgdG8gc2hha3kgdHJhaW48L3A+PHA+SW4gdHJhaW48L3A+PHA+CiAgICAgICAgICAgICAgPHBsYWNlTmFtZSBhbm5vdGF0aW9uSWQ9ImVudF8xNDMiIGNlcnQ9ImRlZmluaXRlIiByZWY9Imh0dHA6Ly93d3cuZ2VvbmFtZXMub3JnLzY0NTMzNjYiPk9zbG88L3BsYWNlTmFtZT4gdG8gQmVyZ2VuPC9wPgogICAgICAgICAgPC9ub3RlPgogICAgICAgICAgPGRhdGVsaW5lPgogICAgICAgICAgICA8ZGF0ZSBhbm5vdGF0aW9uSWQ9ImVudF82OSIgY2VydD0iZGVmaW5pdGUiIHdoZW49IjE5MzUtMTAtMjEiPjIxLjEwLjM1PC9kYXRlPgogICAgICAgICAgPC9kYXRlbGluZT4KICAgICAgICAgIDxzYWx1dGU+RGVhcmVzdCAtPC9zYWx1dGU+CiAgICAgICAgPC9vcGVuZXI+PHA+SSBoYXZlIGhhZCBubzxub3RlIGFubm90YXRpb25JZD0iZW50XzE5MCIgdHlwZT0icmVzZWFyY2hOb3RlIj4KICAgICAgICAgICAgICAgIDxwIHhtbG5zPSJodHRwOi8vd3d3LnRlaS1jLm9yZy9ucy8xLjAiPlNvbWUga2luZCBvZiBub3RlPC9wPgogICAgICAgICAgICA8L25vdGU+IGxldHRlciBmcm9tIHlvdSBzaW5jZSBJIGxlZnQgPHBsYWNlTmFtZSBhbm5vdGF0aW9uSWQ9ImVudF8xNDUiIG9mZnNldElkPSJlbnRfMTQ1IiBjZXJ0PSJkZWZpbml0ZSIgcmVmPSJodHRwOi8vd3d3Lmdlb25hbWVzLm9yZy8yNjczNzIyIj5TdG9ja2hvbG08L3BsYWNlTmFtZT4sIGJ1dCBJIGhhZCBhIG5pY2Ugb25lIGZyb20gSm9obiBpbiBhbiBlbnZlbG9wZSB5b3UgaGFkIHNlbnQgaGltLiBJIGhhZCBzZW50IGhpbSBvbmUgYWRkcmVzc2VkIHRvIENvcGVuaGFnZW4gYnV0IGhlIGhhZG4ndCB1c2VkIGl0LjwvcD48cD5XaGVuIEkgcmVhY2hlZCBPc2xvIHllc3RlcmRheSBldmVuaW5nLCBCcnluanVsZiBCdWxsIHNob3VsZCBoYXZlIGJlZW4gdGhlcmUgdG8gbWVldCBtZSwgYnV0IHdhc24ndC4gSGUgaXMgbm90IG9uIHRoZSB0ZWxlcGhvbmUsIHNvIEkgdG9vayBhIHRheGkgdG8gaGlzIGFkZHJlc3MsIHdoaWNoIHR1cm5lZCBvdXQgdG8gYmUgYSBzdHVkZW50cycgY2x1YiB3aXRoIG5vIG9uZSBhYm91dCBvbiBTdW5kYXlzLCBzbyBJIHdlbnQgdG8gYSBob3RlbCBmZWVsaW5nIHJhdGhlciBub24tcGx1c3NlZC4gQnV0IHByZXNlbnRseSBoZSB0dXJuZWQgdXAuIEhlIGhhZCBnb3QgdGhlIDxwYiBuPSIyIj48L3BiPiB0aW1lIG9mIG15IGFycml2YWwgd3JvbmcsIGFuZCAKICAgICAgICAgICAgPGNob2ljZSBhbm5vdGF0aW9uSWQ9ImVudF82NSI+PHNpYyBhbm5vdGF0aW9uSWQ9ImVudF82NSI+d2hlbjwvc2ljPjxjb3JyIGFubm90YXRpb25JZD0iZW50XzY1Ij53aGVuPC9jb3JyPjwvY2hvaWNlPgogICAgICAgICAgaGUgaGFkIGZvdW5kIGhlIGhhZCBtaXNzZWQgbWUgaGUgcGhvbmVkIHRvIGV2ZXJ5IGhvdGVsIGluIE9zbG8gdGlsbCBoZSBoaXQgb24gdGhlIHJpZ2h0IG9uZS4gSGUgbGVmdCBtZSBhdCAxMCwgYW5kIHRoZW4gSSBoYWQgdG8gZG8gYSBTdW5kYXkgUmVmZXJlZSBhcnRpY2xlLiBUb2RheSBteSBqb3VybmV5IGxhc3RzIGZyb20gOSB0aWxsIDkgLSBmb3J0dW5hdGVseSBvbmUgb2YgdGhlIG1vc3QgYmVhdXRpZnVsIHJhaWx3YXkgam91cm5leXMgaW4gdGhlIHdvcmxkLiBUb21vcnJvdyBJIGxlY3R1cmUgYXQgPHBsYWNlTmFtZSBhbm5vdGF0aW9uSWQ9ImVudF8xNDQiIGNlcnQ9ImRlZmluaXRlIiByZWY9Imh0dHA6Ly93d3cuZ2VvbmFtZXMub3JnLzY1NDg1MjgiPkJlcmdlbjwvcGxhY2VOYW1lPiB0byB0aGUgQW5nbG8tTm9yd2VnaWFuIFNvY2lldHkuIE5leHQgZGF5IEkgZ28gYmFjayB0byBPc2xvLCBsZWN0dXJlIHRoZXJlIEZyaS4gYW5kIFNhdC4gYW5kIHRoZW4gc3RhcnQgZm9yIGhvbWUgdmlhIEJlcmdlbi48L3A+CiAgICAgICAgPHBiIG49IjMiPjwvcGI+CiAgICAgICAgPHA+QnVsbCBpcyBhIG5pY2UgeW91bmcgbWFuIGJ1dCBpbmNvbXBldGVudCAtIGNhbid0IHF1aXRlIHN0YW5kIHRoZSBjb21tdW5pc3RzLCBidXQgZmluZHMgdGhlIHNvY2lhbGlzdHMgdG9vIG1pbGQuPC9wPjxwPkkgYW0gdW5oYXBwaWx5IHdvbmRlcmluZyB3aGF0IHlvdSBhcmUgZmVlbGluZyBhYm91dCBtZS48L3A+CiAgICAgICAgPGNsb3Nlcj4KICAgICAgICAgIDxzYWx1dGU+SSBsb3ZlIHlvdSB2ZXJ5IG11Y2ggLTwvc2FsdXRlPgogICAgICAgICAgPHNpZ25lZD4KICAgICAgICAgICAgPHBlcnNOYW1lIHNhbWVBcz0iaHR0cDovL3d3dy5mcmVlYmFzZS5jb20vdmlldy9lbi9iZXJ0cmFuZF9ydXNzZWxsIj4KICAgICAgICAgICAgICA8cGVyc05hbWUgYW5ub3RhdGlvbklkPSJlbnRfMTA5IiBjZXJ0PSJkZWZpbml0ZSIgdHlwZT0icmVhbCIgcmVmPSJodHRwOi8vdmlhZi5vcmcvdmlhZi8zNjkyNDEzNyI+QjwvcGVyc05hbWU+CiAgICAgICAgICAgIDwvcGVyc05hbWU+CiAgICAgICAgICA8L3NpZ25lZD4KICAgICAgICA8L2Nsb3Nlcj4KICAgICAgPC9kaXY+CiAgICA8L2JvZHk+CiAgPC90ZXh0Pgo8L1RFST4K"
+		})
+		.reply(200, ["1f8b0800000000000003b5555d4fdb3014fd2b28cf85d84e9c3495d0f6506d425aa92a75a0749ad0f557e3928f2a76a014f5bfcfa614155ed6a0edd1d7b9e7de73cff1cd73c09bdacada06a3e7a0864a06a3c0ca8dbdb01b1b0c8235d8e27dc414e00299824872aab24812cc2811994895009209c563168938ca221223e4208cde3ad0281ac683a06b4b975c58bb36a33084b5be586a5b74ec823755d8ca7563c2b2e3b0ea", "c24a1b1ebeb666c243475f5aa92e857c70b085adcabbf7784758c728ac6c58e892de505cb6fbf443f25f9b7129a18732610ff2a279accb06c487622d3cbe32ef8c6c5f69be0ce1b8f10f3ddba7b55747e9523a0677a5aeef8d57cdc852fdaba93a927da03e3513afdc51919355dbed06ceac55e55b74ac5f7c98a28c02a19472c5580282f218c729432a13248524c189101943c20dac6e84bcd3c2254dc67932239965b7259aacaef0743e7b9a8ef966bae28fd3f94d3159fdc4d7b7d7555e5d91fc7686f3ed6c733d167af23da78bf15594cf7332992fee17e3d2c566970ebca7b1fddcf6544cd883c2e99edf83f7c186ce164d7bb4057e745c43dd9c7d6bf5762b5b702c6505da4bb737e9d74a7acbbab800eb9d491041e7283a47644ed088a623325c046fa259f97fd06d2b5df18321dcfe1184c6c0338c632e80c33046221502278a2554a9a16428cd92cf69e66b99f0e41a8e7b258d81a59f8e692a79b6d7e5ec10f50bb675cbd7bde35f070608458a0e9994719250ce39223151b180244d319518739561c420fd1c8383eb7a54e9edba93b177bf07c1836cb5d21cac6e6a2fe3fe2cdd3b55501a39085a09c65f055d6df4b27637fe9fb2acc176ad9b6bdd95a51fe3935fb3fbe36eb7fb033d170a4bd7060000"], [
+			'Server',
+			'GitHub.com',
+			'Date',
+			'Mon, 02 Mar 2020 20:57:28 GMT',
 			'Content-Type',
 			'application/json; charset=utf-8',
 			'Transfer-Encoding',
@@ -83,73 +150,21 @@ function enableAllMocks() {
 			'X-RateLimit-Remaining',
 			'4998',
 			'X-RateLimit-Reset',
-			'1527270412',
-			'Cache-Control',
-			'no-cache',
-			'X-OAuth-Scopes',
-			'repo',
-			'X-Accepted-OAuth-Scopes',
-			'repo',
-			'X-GitHub-Media-Type',
-			'github.v3; format=json',
-			'Access-Control-Expose-Headers',
-			'ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval',
-			'Access-Control-Allow-Origin',
-			'*',
-			'Strict-Transport-Security',
-			'max-age=31536000; includeSubdomains; preload',
-			'X-Frame-Options',
-			'deny',
-			'X-Content-Type-Options',
-			'nosniff',
-			'X-XSS-Protection',
-			'1; mode=block',
-			'Referrer-Policy',
-			'origin-when-cross-origin, strict-origin-when-cross-origin',
-			'Content-Security-Policy',
-			'default-src \'none\'',
-			'X-Runtime-rack',
-			'0.077948',
-			'Content-Encoding',
-			'gzip',
-			'X-GitHub-Request-Id',
-			'ABB2:3F8D:1414479:28FE460:5B083E69' ]);
-
-	nock('https://api.github.com:443', {"encodedQueryParams":true})
-		.put('/repos/jchartrand/aTest/contents/curt/qurt/test.txt', {"message":"some commit message","sha":"9fa3ec5f93e21b52d9d7fda29dfc4b3d43932400","branch":"jchartrand","content":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPFRFSSB4bWxucz0iaHR0cDovL3d3dy50ZWktYy5vcmcvbnMvMS4wIiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiIHhtbG5zOmN3PSJodHRwOi8vY3dyYy5jYS9ucy9jdyMiIHhtbG5zOnc9Imh0dHA6Ly9jd3JjdGMuYXJ0c3JuLnVhbGJlcnRhLmNhLyMiPgogIDx0ZWlIZWFkZXI+CiAgICA8ZmlsZURlc2M+CiAgICAgIDx0aXRsZVN0bXQ+CiAgICAgICAgPHRpdGxlPlNhbXBsZSBEb2N1bWVudCBUaXRsZSB0ZXN0IHVuZGVmaW5lZDwvdGl0bGU+CiAgICAgIDwvdGl0bGVTdG10PgogICAgICA8cHVibGljYXRpb25TdG10PgogICAgICAgIDxwPjwvcD4KICAgICAgPC9wdWJsaWNhdGlvblN0bXQ+CiAgICAgIDxzb3VyY2VEZXNjIHNhbWVBcz0iaHR0cDovL3d3dy5jd3JjLmNhIj4KICAgICAgICA8cD5DcmVhdGVkIGZyb20gb3JpZ2luYWwgcmVzZWFyY2ggYnkgbWVtYmVycyBvZiBDV1JDL0NTw4lDIHVubGVzcyBvdGhlcndpc2Ugbm90ZWQuPC9wPgogICAgICA8L3NvdXJjZURlc2M+CiAgICA8L2ZpbGVEZXNjPgogIDwvdGVpSGVhZGVyPgogIDx0ZXh0PgogICAgPGJvZHk+CiAgICAgIDxkaXYgdHlwZT0ibGV0dGVyIj4KICAgICAgICA8aGVhZD4KICAgICAgICAgIDx0aXRsZT5TYW1wbGUgTGV0dGVyIC0gQmVydHJhbmQgUnVzc2VsbCB0byA8cGVyc05hbWUgYW5ub3RhdGlvbklkPSJlbnRfNzMiIGNlcnQ9InByb2JhYmxlIiByZWY9IjI3OTM5OTM5OSI+UGF0cmljaWEgU3BlbmNlPC9wZXJzTmFtZT4gLSBPY3RvYmVyIDIxLCAxOTM1PC90aXRsZT4KICAgICAgICA8L2hlYWQ+CiAgICAgICAgPG9wZW5lcj4KICAgICAgICAgIDxub3RlPgogICAgICAgICAgICA8cD5CYWQgd3JpdGluZyBkdWUgdG8gc2hha3kgdHJhaW48L3A+PHA+SW4gdHJhaW48L3A+PHA+CiAgICAgICAgICAgICAgPHBsYWNlTmFtZSBhbm5vdGF0aW9uSWQ9ImVudF8xNDMiIGNlcnQ9ImRlZmluaXRlIiByZWY9Imh0dHA6Ly93d3cuZ2VvbmFtZXMub3JnLzY0NTMzNjYiPk9zbG88L3BsYWNlTmFtZT4gdG8gQmVyZ2VuPC9wPgogICAgICAgICAgPC9ub3RlPgogICAgICAgICAgPGRhdGVsaW5lPgogICAgICAgICAgICA8ZGF0ZSBhbm5vdGF0aW9uSWQ9ImVudF82OSIgY2VydD0iZGVmaW5pdGUiIHdoZW49IjE5MzUtMTAtMjEiPjIxLjEwLjM1PC9kYXRlPgogICAgICAgICAgPC9kYXRlbGluZT4KICAgICAgICAgIDxzYWx1dGU+RGVhcmVzdCAtPC9zYWx1dGU+CiAgICAgICAgPC9vcGVuZXI+PHA+SSBoYXZlIGhhZCBubzxub3RlIGFubm90YXRpb25JZD0iZW50XzE5MCIgdHlwZT0icmVzZWFyY2hOb3RlIj4KICAgICAgICAgICAgICAgIDxwIHhtbG5zPSJodHRwOi8vd3d3LnRlaS1jLm9yZy9ucy8xLjAiPlNvbWUga2luZCBvZiBub3RlPC9wPgogICAgICAgICAgICA8L25vdGU+IGxldHRlciBmcm9tIHlvdSBzaW5jZSBJIGxlZnQgPHBsYWNlTmFtZSBhbm5vdGF0aW9uSWQ9ImVudF8xNDUiIG9mZnNldElkPSJlbnRfMTQ1IiBjZXJ0PSJkZWZpbml0ZSIgcmVmPSJodHRwOi8vd3d3Lmdlb25hbWVzLm9yZy8yNjczNzIyIj5TdG9ja2hvbG08L3BsYWNlTmFtZT4sIGJ1dCBJIGhhZCBhIG5pY2Ugb25lIGZyb20gSm9obiBpbiBhbiBlbnZlbG9wZSB5b3UgaGFkIHNlbnQgaGltLiBJIGhhZCBzZW50IGhpbSBvbmUgYWRkcmVzc2VkIHRvIENvcGVuaGFnZW4gYnV0IGhlIGhhZG4ndCB1c2VkIGl0LjwvcD48cD5XaGVuIEkgcmVhY2hlZCBPc2xvIHllc3RlcmRheSBldmVuaW5nLCBCcnluanVsZiBCdWxsIHNob3VsZCBoYXZlIGJlZW4gdGhlcmUgdG8gbWVldCBtZSwgYnV0IHdhc24ndC4gSGUgaXMgbm90IG9uIHRoZSB0ZWxlcGhvbmUsIHNvIEkgdG9vayBhIHRheGkgdG8gaGlzIGFkZHJlc3MsIHdoaWNoIHR1cm5lZCBvdXQgdG8gYmUgYSBzdHVkZW50cycgY2x1YiB3aXRoIG5vIG9uZSBhYm91dCBvbiBTdW5kYXlzLCBzbyBJIHdlbnQgdG8gYSBob3RlbCBmZWVsaW5nIHJhdGhlciBub24tcGx1c3NlZC4gQnV0IHByZXNlbnRseSBoZSB0dXJuZWQgdXAuIEhlIGhhZCBnb3QgdGhlIDxwYiBuPSIyIj48L3BiPiB0aW1lIG9mIG15IGFycml2YWwgd3JvbmcsIGFuZCAKICAgICAgICAgICAgPGNob2ljZSBhbm5vdGF0aW9uSWQ9ImVudF82NSI+PHNpYyBhbm5vdGF0aW9uSWQ9ImVudF82NSI+d2hlbjwvc2ljPjxjb3JyIGFubm90YXRpb25JZD0iZW50XzY1Ij53aGVuPC9jb3JyPjwvY2hvaWNlPgogICAgICAgICAgaGUgaGFkIGZvdW5kIGhlIGhhZCBtaXNzZWQgbWUgaGUgcGhvbmVkIHRvIGV2ZXJ5IGhvdGVsIGluIE9zbG8gdGlsbCBoZSBoaXQgb24gdGhlIHJpZ2h0IG9uZS4gSGUgbGVmdCBtZSBhdCAxMCwgYW5kIHRoZW4gSSBoYWQgdG8gZG8gYSBTdW5kYXkgUmVmZXJlZSBhcnRpY2xlLiBUb2RheSBteSBqb3VybmV5IGxhc3RzIGZyb20gOSB0aWxsIDkgLSBmb3J0dW5hdGVseSBvbmUgb2YgdGhlIG1vc3QgYmVhdXRpZnVsIHJhaWx3YXkgam91cm5leXMgaW4gdGhlIHdvcmxkLiBUb21vcnJvdyBJIGxlY3R1cmUgYXQgPHBsYWNlTmFtZSBhbm5vdGF0aW9uSWQ9ImVudF8xNDQiIGNlcnQ9ImRlZmluaXRlIiByZWY9Imh0dHA6Ly93d3cuZ2VvbmFtZXMub3JnLzY1NDg1MjgiPkJlcmdlbjwvcGxhY2VOYW1lPiB0byB0aGUgQW5nbG8tTm9yd2VnaWFuIFNvY2lldHkuIE5leHQgZGF5IEkgZ28gYmFjayB0byBPc2xvLCBsZWN0dXJlIHRoZXJlIEZyaS4gYW5kIFNhdC4gYW5kIHRoZW4gc3RhcnQgZm9yIGhvbWUgdmlhIEJlcmdlbi48L3A+CiAgICAgICAgPHBiIG49IjMiPjwvcGI+CiAgICAgICAgPHA+QnVsbCBpcyBhIG5pY2UgeW91bmcgbWFuIGJ1dCBpbmNvbXBldGVudCAtIGNhbid0IHF1aXRlIHN0YW5kIHRoZSBjb21tdW5pc3RzLCBidXQgZmluZHMgdGhlIHNvY2lhbGlzdHMgdG9vIG1pbGQuPC9wPjxwPkkgYW0gdW5oYXBwaWx5IHdvbmRlcmluZyB3aGF0IHlvdSBhcmUgZmVlbGluZyBhYm91dCBtZS48L3A+CiAgICAgICAgPGNsb3Nlcj4KICAgICAgICAgIDxzYWx1dGU+SSBsb3ZlIHlvdSB2ZXJ5IG11Y2ggLTwvc2FsdXRlPgogICAgICAgICAgPHNpZ25lZD4KICAgICAgICAgICAgPHBlcnNOYW1lIHNhbWVBcz0iaHR0cDovL3d3dy5mcmVlYmFzZS5jb20vdmlldy9lbi9iZXJ0cmFuZF9ydXNzZWxsIj4KICAgICAgICAgICAgICA8cGVyc05hbWUgYW5ub3RhdGlvbklkPSJlbnRfMTA5IiBjZXJ0PSJkZWZpbml0ZSIgdHlwZT0icmVhbCIgcmVmPSJodHRwOi8vdmlhZi5vcmcvdmlhZi8zNjkyNDEzNyI+QjwvcGVyc05hbWU+CiAgICAgICAgICAgIDwvcGVyc05hbWU+CiAgICAgICAgICA8L3NpZ25lZD4KICAgICAgICA8L2Nsb3Nlcj4KICAgICAgPC9kaXY+CiAgICA8L2JvZHk+CiAgPC90ZXh0Pgo8L1RFST4K"})
-		.query({"access_token":config.personal_oath_for_testing})
-		.reply(200, ["1f8b0800000000000003b5954d6fdb300c86ff4aa0731adbb26ccb01860dd86de79e360c052551b13b7f6492bcae2bf2df4735499b353be403bd18b064f1215fbe949f981e87804360cb2736408f6cc902fab008bf039bb335848656f4e442f2333e0ef67c03b4555bc85117b6ce9167aae0a6369535c06b63b550b911799d7391a614ccb77f287c9e4b316793ebe87013c2da2f9304d6ed62d58666520b3df689c3f5e8937bdd800b0e0693c02da594ec32f5c9713a1f1dda0faf0708d684bebbfb977240388aadba511d128f11149302bc09795ae2742e89009f9ca196191f866e04f386e8e06127d5e4d1ed247956eda8a68385","ff96131ed7b1ddb6ed908abbebdae1878f36f0d8d9f76d0e097236e02211a30b0e48573a60b399d3b8f47dcc9e647af63fd605a02e45990b69adcd4b50bce015ca221799b4358d0317c25a52f812cfc7aab7489f9c813ad3fd5bc23900984233ba834be30bdd1d7ef6793fb2542ef6d046f1eff5e265923fade262b42b7d602044fff13493376971c38bdbac5c0ab914fc2b7b513ae0fb5282434a62df4d53555925539d73cd4b6d6a50699a01486374a16ca9244ac4da882bba19813e3919444290b01e56512a3ff638db366bb65f8d97b4a30b9c46f7dbbe0c9d6b449d15aa5059c15363d12ac3659d4a095a004755a75a55d794b137e519a8cb4c793260f37dce7ea16b6dab21b4e310bbba7d47c396163a8f73e6107cdc62d3e0dbd5403bf1bfb41a204c8e141ea6ae8b823ec69b77fbbad96cfe0247aee76c25070000"], [ 'Server',
-			'GitHub.com',
-			'Date',
-			'Fri, 25 May 2018 16:48:42 GMT',
-			'Content-Type',
-			'application/json; charset=utf-8',
-			'Transfer-Encoding',
-			'chunked',
-			'Connection',
-			'close',
-			'Status',
-			'200 OK',
-			'X-RateLimit-Limit',
-			'5000',
-			'X-RateLimit-Remaining',
-			'4986',
-			'X-RateLimit-Reset',
-			'1527267709',
+			'1583186247',
 			'Cache-Control',
 			'private, max-age=60, s-maxage=60',
 			'Vary',
 			'Accept, Authorization, Cookie, X-GitHub-OTP',
 			'ETag',
-			'W/"1033d9694ff48e11f883e439510fa73c"',
+			'W/"55ac73e64654da88df074d387f11f186"',
 			'X-OAuth-Scopes',
-			'repo',
+			'repo, user',
 			'X-Accepted-OAuth-Scopes',
 			'',
 			'X-GitHub-Media-Type',
 			'github.v3; format=json',
 			'Access-Control-Expose-Headers',
-			'ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval',
+			'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset',
 			'Access-Control-Allow-Origin',
 			'*',
 			'Strict-Transport-Security',
@@ -163,21 +178,27 @@ function enableAllMocks() {
 			'Referrer-Policy',
 			'origin-when-cross-origin, strict-origin-when-cross-origin',
 			'Content-Security-Policy',
-			'default-src \'none\'',
-			'X-Runtime-rack',
-			'0.709055',
+			"default-src 'none'",
+			'Vary',
+			'Accept-Encoding, Accept, X-Requested-With',
 			'Content-Encoding',
 			'gzip',
 			'X-GitHub-Request-Id',
-			'9B1B:3F8D:1414495:28FE48D:5B083E6A' ]);
+			'BDB3:2318:A7F6C3:1A6A1F0:5E5D7338'
+		]);
 
-	nock('https://api.github.com:443', {"encodedQueryParams":true})
+	nock('https://api.github.com:443', {
+			"encodedQueryParams": true
+		})
 		.get('/search/issues')
-		.query({"access_token":config.personal_oath_for_testing,"q":"state%3Aopen%20type%3Apr%20repo%3Ajchartrand%2FaTest%20head%3Ajchartrand"})
-		.reply(200, ["1f8b0800000000000003a595516fd33010c7bf4ae5e7ae6ed2a64c91104fbc02424348a02972936b6270ec609f3b95a8df9db39b755b2b01c99ea224f7fff97cbefbbb676850a8a2345e23cb933993ba346da700a1b0e0bc42c7f29d500ee817424b6fdf7be6ad62396b103b97732e3ab9a825367ebb202db7d019c77f948db06885aeb8b803875c3ae7c1f194cd598c9068eca198402280125b506e8af89c063f317aae450b476252ea2d687c25f5914240d8bf1e776210acc1565decf759c9af8add79a562a965c5f2559aae969be4763d67dab75bb02c4fe70c252aa053ac95b1d278378b1f663b63679f3e93d2bb10d833656aa929ee698d019baddf249b6ccec45ea0b09787113fbad5d01801561a8d5491d8239e9fd4eff66fd784abed0009e9b2b0f8df1a2cc09e37d888f250e8ce28651e887099f1cb2ebe5c849f756786d4f52406e97a6eb0012a1a6d25345f2dddbf3aef2aa1a8e9797814b20a144725b7508d4c6a50514a0f9ab2e9e30047","9cdfbad2ca0ea5d163abf5424b2c636ba1e56f3185455a4788e81a23f71635a4fd9f59bc2af049d4f3cecabd280fa124164a907b2af124e0859a7878e8c20c7e09b3460527872d44d586798b9e7b7cb43a72ddfb78be18c24d079ac295297f020dcc60cfc239596ba0004dd34f7339bc07cb26712b15d9b0d1e7ff67abca97e47e16885d15826e01962e93db9b6576932477c92acfb27cbdfe46ebf9aeba8e49b3bb6493af377916634a65dc8019b2f0d8185b5032a694f1f869818f5f3fbc0f1e136c8aae995f7431d0bad3ee95c0385d2b533db292bbdd686f5d0455d882c0b219af8e3246e7bb35d5812ae24c0bb3702212672d38276a080d511a4be7952c96c7fbe31ff38d2afeac070000"], [ 'Server',
+		.query({
+			"q": "state%3Aopen%20type%3Apr%20repo%3Alucaju%2Fmisc%20head%3Adev"
+		})
+		.reply(200, ["1f8b0800000000000003a555ef4fdb3010fd572a7f863a494b2722a169d3d83eb58c8d6d880955ae734d0d8e9df947a18dfabfefec868a76d246d8a728f6bd77e7e7bbe78638ed989c72ed9523797a4484e2baaa2538981ab05e3a4bf239931670cb41857f3f1be28d2439593857db9c52568b7e29dcc2cffa88a5066a6da9f49cdd795a09cba9b0d683a5237244e2a670daaca6dd48102bd90ca4ed88db25a75b784315ab608374586b05cabd9ef08900b960f95f4c5b38f22c5c250f0ef84cd9e79ad65ecaa8a828487e323a494e4783747444942e601ad6c8f8c3f9e3857c9fce3e3d7ebdb9fe98de5c4f92f19aa7e3bb77e9783d5e2156f96a0686e48873c249405429b511dadb5e5ce8cdb5e97dfe82a1de86c086485d0a8571db5ada", "fc6976327c3338ddcf7e39fa7e3d91fcee7c35b9ba1c8cd7f76718cd96cc3173788771d1666d1785545c2b8792c686f2b4e57fbb3c1b2247695a9678cc50dbdfda31b03db5e30b15c6b0b996523f20f2b0d4fd5e7f4e4e77981d5ea8b2331e310dd56e01a812961e3ab514f65f6dba57488c6f68f8602b04068bfa1a283a14d322b0940785553471ac23959f596e44ed84565dd4d9c3218f36255362cdbaf220ce223c1a4987f3c478c4bd6452f7c4dc021a5a1bb1647c152430c0412c51cece640748e472ab3a8cddb7305e282e7aec94155518b1e8ba9b27db43dfbd8df7e842b8ae4161b8d4fc1e70085a8366d68a5201062874071cb6f63f9836822b21c13aad76fb3b03cb13b44303c85d4c19be03244bb2e438c98ed3e15532ccb3619e643798cfd7c59f31d9e02a3d0d318334c470a96d4bd356e1dd429b2916a3b988d78d092e7e4cce83ad041bc387e617be0f98b7f3cb12e0db87e515ce5988f9bc8bd9f60320d4cc1c5f74024604c1bb9ce96285a7b7ba825e505fb85e05d6b212c2e5736df06ed27eb2b9ddfc0615119efe9a070000"], [
+			'Server',
 			'GitHub.com',
 			'Date',
-			'Fri, 25 May 2018 16:48:42 GMT',
+			'Mon, 02 Mar 2020 20:57:29 GMT',
 			'Content-Type',
 			'application/json; charset=utf-8',
 			'Transfer-Encoding',
@@ -191,17 +212,17 @@ function enableAllMocks() {
 			'X-RateLimit-Remaining',
 			'29',
 			'X-RateLimit-Reset',
-			'1527266982',
+			'1583182709',
 			'Cache-Control',
 			'no-cache',
 			'X-OAuth-Scopes',
-			'repo',
+			'repo, user',
 			'X-Accepted-OAuth-Scopes',
 			'',
 			'X-GitHub-Media-Type',
 			'github.v3; format=json',
 			'Access-Control-Expose-Headers',
-			'ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval',
+			'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset',
 			'Access-Control-Allow-Origin',
 			'*',
 			'Strict-Transport-Security',
@@ -215,15 +236,345 @@ function enableAllMocks() {
 			'Referrer-Policy',
 			'origin-when-cross-origin, strict-origin-when-cross-origin',
 			'Content-Security-Policy',
-			'default-src \'none\'',
-			'X-Runtime-rack',
-			'0.105161',
+			"default-src 'none'",
+			'Vary',
+			'Accept-Encoding, Accept, X-Requested-With',
 			'Content-Encoding',
 			'gzip',
 			'X-GitHub-Request-Id',
-			'83DA:3F8C:E3A92A:1F01623:5B083E6A' ]);
+			'806E:19F9:1224998:26A7437:5E5D7338'
+		]);
+
+	nock('http://127.0.0.1:53017', {
+			"encodedQueryParams": true
+		})
+		.put('/github/repos/lucaju/misc/pr', {
+			"owner": "lucaju",
+			"repo": "misc",
+			"content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<TEI xmlns=\"http://www.tei-c.org/ns/1.0\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:cw=\"http://cwrc.ca/ns/cw#\" xmlns:w=\"http://cwrctc.artsrn.ualberta.ca/#\">\n  <teiHeader>\n    <fileDesc>\n      <titleStmt>\n        <title>Sample Document Title test undefined</title>\n      </titleStmt>\n      <publicationStmt>\n        <p></p>\n      </publicationStmt>\n      <sourceDesc sameAs=\"http://www.cwrc.ca\">\n        <p>Created from original research by members of CWRC/CSÉC unless otherwise noted.</p>\n      </sourceDesc>\n    </fileDesc>\n  </teiHeader>\n  <text>\n    <body>\n      <div type=\"letter\">\n        <head>\n          <title>Sample Letter - Bertrand Russell to <persName annotationId=\"ent_73\" cert=\"probable\" ref=\"279399399\">Patricia Spence</persName> - October 21, 1935</title>\n        </head>\n        <opener>\n          <note>\n            <p>Bad writing due to shaky train</p><p>In train</p><p>\n              <placeName annotationId=\"ent_143\" cert=\"definite\" ref=\"http://www.geonames.org/6453366\">Oslo</placeName> to Bergen</p>\n          </note>\n          <dateline>\n            <date annotationId=\"ent_69\" cert=\"definite\" when=\"1935-10-21\">21.10.35</date>\n          </dateline>\n          <salute>Dearest -</salute>\n        </opener><p>I have had no<note annotationId=\"ent_190\" type=\"researchNote\">\n                <p xmlns=\"http://www.tei-c.org/ns/1.0\">Some kind of note</p>\n            </note> letter from you since I left <placeName annotationId=\"ent_145\" offsetId=\"ent_145\" cert=\"definite\" ref=\"http://www.geonames.org/2673722\">Stockholm</placeName>, but I had a nice one from John in an envelope you had sent him. I had sent him one addressed to Copenhagen but he hadn't used it.</p><p>When I reached Oslo yesterday evening, Brynjulf Bull should have been there to meet me, but wasn't. He is not on the telephone, so I took a taxi to his address, which turned out to be a students' club with no one about on Sundays, so I went to a hotel feeling rather non-plussed. But presently he turned up. He had got the <pb n=\"2\"></pb> time of my arrival wrong, and \n            <choice annotationId=\"ent_65\"><sic annotationId=\"ent_65\">when</sic><corr annotationId=\"ent_65\">when</corr></choice>\n          he had found he had missed me he phoned to every hotel in Oslo till he hit on the right one. He left me at 10, and then I had to do a Sunday Referee article. Today my journey lasts from 9 till 9 - fortunately one of the most beautiful railway journeys in the world. Tomorrow I lecture at <placeName annotationId=\"ent_144\" cert=\"definite\" ref=\"http://www.geonames.org/6548528\">Bergen</placeName> to the Anglo-Norwegian Society. Next day I go back to Oslo, lecture there Fri. and Sat. and then start for home via Bergen.</p>\n        <pb n=\"3\"></pb>\n        <p>Bull is a nice young man but incompetent - can't quite stand the communists, but finds the socialists too mild.</p><p>I am unhappily wondering what you are feeling about me.</p>\n        <closer>\n          <salute>I love you very much -</salute>\n          <signed>\n            <persName sameAs=\"http://www.freebase.com/view/en/bertrand_russell\">\n              <persName annotationId=\"ent_109\" cert=\"definite\" type=\"real\" ref=\"http://viaf.org/viaf/36924137\">B</persName>\n            </persName>\n          </signed>\n        </closer>\n      </div>\n    </body>\n  </text>\n</TEI>\n",
+			"message": "some commit message",
+			"title": "a title for the pull request",
+			"branch": "dev",
+			"path": "text.txt"
+		})
+		.reply(200, {
+			"owner": "lucaju",
+			"repo": "misc",
+			"path": "text.txt",
+			"content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<TEI xmlns=\"http://www.tei-c.org/ns/1.0\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:cw=\"http://cwrc.ca/ns/cw#\" xmlns:w=\"http://cwrctc.artsrn.ualberta.ca/#\">\n  <teiHeader>\n    <fileDesc>\n      <titleStmt>\n        <title>Sample Document Title test undefined</title>\n      </titleStmt>\n      <publicationStmt>\n        <p></p>\n      </publicationStmt>\n      <sourceDesc sameAs=\"http://www.cwrc.ca\">\n        <p>Created from original research by members of CWRC/CSÉC unless otherwise noted.</p>\n      </sourceDesc>\n    </fileDesc>\n  </teiHeader>\n  <text>\n    <body>\n      <div type=\"letter\">\n        <head>\n          <title>Sample Letter - Bertrand Russell to <persName annotationId=\"ent_73\" cert=\"probable\" ref=\"279399399\">Patricia Spence</persName> - October 21, 1935</title>\n        </head>\n        <opener>\n          <note>\n            <p>Bad writing due to shaky train</p><p>In train</p><p>\n              <placeName annotationId=\"ent_143\" cert=\"definite\" ref=\"http://www.geonames.org/6453366\">Oslo</placeName> to Bergen</p>\n          </note>\n          <dateline>\n            <date annotationId=\"ent_69\" cert=\"definite\" when=\"1935-10-21\">21.10.35</date>\n          </dateline>\n          <salute>Dearest -</salute>\n        </opener><p>I have had no<note annotationId=\"ent_190\" type=\"researchNote\">\n                <p xmlns=\"http://www.tei-c.org/ns/1.0\">Some kind of note</p>\n            </note> letter from you since I left <placeName annotationId=\"ent_145\" offsetId=\"ent_145\" cert=\"definite\" ref=\"http://www.geonames.org/2673722\">Stockholm</placeName>, but I had a nice one from John in an envelope you had sent him. I had sent him one addressed to Copenhagen but he hadn't used it.</p><p>When I reached Oslo yesterday evening, Brynjulf Bull should have been there to meet me, but wasn't. He is not on the telephone, so I took a taxi to his address, which turned out to be a students' club with no one about on Sundays, so I went to a hotel feeling rather non-plussed. But presently he turned up. He had got the <pb n=\"2\"></pb> time of my arrival wrong, and \n            <choice annotationId=\"ent_65\"><sic annotationId=\"ent_65\">when</sic><corr annotationId=\"ent_65\">when</corr></choice>\n          he had found he had missed me he phoned to every hotel in Oslo till he hit on the right one. He left me at 10, and then I had to do a Sunday Referee article. Today my journey lasts from 9 till 9 - fortunately one of the most beautiful railway journeys in the world. Tomorrow I lecture at <placeName annotationId=\"ent_144\" cert=\"definite\" ref=\"http://www.geonames.org/6548528\">Bergen</placeName> to the Anglo-Norwegian Society. Next day I go back to Oslo, lecture there Fri. and Sat. and then start for home via Bergen.</p>\n        <pb n=\"3\"></pb>\n        <p>Bull is a nice young man but incompetent - can't quite stand the communists, but finds the socialists too mild.</p><p>I am unhappily wondering what you are feeling about me.</p>\n        <closer>\n          <salute>I love you very much -</salute>\n          <signed>\n            <persName sameAs=\"http://www.freebase.com/view/en/bertrand_russell\">\n              <persName annotationId=\"ent_109\" cert=\"definite\" type=\"real\" ref=\"http://viaf.org/viaf/36924137\">B</persName>\n            </persName>\n          </signed>\n        </closer>\n      </div>\n    </body>\n  </text>\n</TEI>\n",
+			"branch": "dev",
+			"message": "some commit message",
+			"title": "a title for the pull request",
+			"sha": "9fa3ec5f93e21b52d9d7fda29dfc4b3d43932400"
+		}, [
+			'X-Powered-By',
+			'Express',
+			'Access-Control-Allow-Origin',
+			'https://localhost',
+			'Access-Control-Allow-Methods',
+			'GET,PUT,POST,OPTIONS,DELETE',
+			'Access-Control-Allow-Headers',
+			'cwrc-token, Content-Type',
+			'Access-Control-Allow-Credentials',
+			'true',
+			'Content-Type',
+			'application/json; charset=utf-8',
+			'Content-Length',
+			'3705',
+			'ETag',
+			'W/"e79-Dv59m9At1naI1vVUpNzNKHlnMFk"',
+			'Date',
+			'Mon, 02 Mar 2020 20:57:20 GMT',
+			'Connection',
+			'close'
+		]);
 
 
+	// nock('https://api.github.com:443', {
+	// 		"encodedQueryParams": true
+	// 	})
+	// 	.get('/repos/lucaju/misc/git/ref/heads/dev')
+	// 	.reply(200, ["1f8b08000000000000039d8e3d0f82301086ff4b67e309e1ab246c2c0e8468d4d5945e81122a84162331fc77cfb839199777b8f7e3b9279b54cdd2b75a6895400ba8ee6cc36e03aaab46b28abc88cee6628a6eef95a7c352e6f2519a638f4d9651709e7a0ab5ce8d3605", "10a3de36dab573b5958381498d83857e96a29bc1682b814cba7ec186aa53d2b1f4c96c2b682d41dfaf15e7b88b4454794950c73c08bc20a9907b18463cf46bdcc998f06e1915350866b4fbef9d4fd7c2cfd4757d01b3e16e1737010000"], [
+	// 		'Server',
+	// 		'GitHub.com',
+	// 		'Date',
+	// 		'Tue, 11 Feb 2020 04:44:46 GMT',
+	// 		'Content-Type',
+	// 		'application/json; charset=utf-8',
+	// 		'Transfer-Encoding',
+	// 		'chunked',
+	// 		'Connection',
+	// 		'close',
+	// 		'Status',
+	// 		'200 OK',
+	// 		'X-RateLimit-Limit',
+	// 		'5000',
+	// 		'X-RateLimit-Remaining',
+	// 		'4986',
+	// 		'X-RateLimit-Reset',
+	// 		'1581397691',
+	// 		'Cache-Control',
+	// 		'private, max-age=60, s-maxage=60',
+	// 		'Vary',
+	// 		'Accept, Authorization, Cookie, X-GitHub-OTP',
+	// 		'ETag',
+	// 		'W/"9c30856e19e6217f311be0dbe822b537"',
+	// 		'Last-Modified',
+	// 		'Sat, 08 Feb 2020 04:53:49 GMT',
+	// 		'X-Poll-Interval',
+	// 		'300',
+	// 		'X-OAuth-Scopes',
+	// 		'delete_repo, notifications, repo, user',
+	// 		'X-Accepted-OAuth-Scopes',
+	// 		'repo',
+	// 		'X-GitHub-Media-Type',
+	// 		'github.v3; format=json',
+	// 		'Access-Control-Expose-Headers',
+	// 		'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type',
+	// 		'Access-Control-Allow-Origin',
+	// 		'*',
+	// 		'Strict-Transport-Security',
+	// 		'max-age=31536000; includeSubdomains; preload',
+	// 		'X-Frame-Options',
+	// 		'deny',
+	// 		'X-Content-Type-Options',
+	// 		'nosniff',
+	// 		'X-XSS-Protection',
+	// 		'1; mode=block',
+	// 		'Referrer-Policy',
+	// 		'origin-when-cross-origin, strict-origin-when-cross-origin',
+	// 		'Content-Security-Policy',
+	// 		"default-src 'none'",
+	// 		'Vary',
+	// 		'Accept-Encoding, Accept',
+	// 		'Content-Encoding',
+	// 		'gzip',
+	// 		'X-GitHub-Request-Id',
+	// 		'820B:34D6:177EBE:39379E:5E42313E'
+	// 	]);
+
+	// nock('https://api.github.com:443', {
+	// 		"encodedQueryParams": true
+	// 	})
+	// 	.post('/graphql', {
+	// 		"query": "{\n\t\t\trepository(owner: \"lucaju\", name: \"misc\") {\n\t\t\t\tobject(expression: \"dev:text.txt\") {\n\t\t\t\t\t... on Blob {\n\t\t\t\t\t\toid\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}"
+	// 	})
+	// 	.reply(200, ["1f8b08000000000000031dc74b0e80200c00d1bbf404d8624cb94da16d821b0cb231c4bbfb99d59b092a43204de876b4b38ed6afef5adead8c5f552101bb9095d5990c97bca2b26eae82ac5e62268dc4843104b8df1e44b3d74655000000"], [
+	// 		'Server',
+	// 		'GitHub.com',
+	// 		'Date',
+	// 		'Tue, 11 Feb 2020 04:44:47 GMT',
+	// 		'Content-Type',
+	// 		'application/json; charset=utf-8',
+	// 		'Transfer-Encoding',
+	// 		'chunked',
+	// 		'Connection',
+	// 		'close',
+	// 		'Status',
+	// 		'200 OK',
+	// 		'Cache-Control',
+	// 		'no-cache',
+	// 		'X-OAuth-Scopes',
+	// 		'delete_repo, notifications, repo, user',
+	// 		'X-Accepted-OAuth-Scopes',
+	// 		'repo',
+	// 		'X-GitHub-Media-Type',
+	// 		'github.v3; format=json',
+	// 		'X-RateLimit-Limit',
+	// 		'5000',
+	// 		'X-RateLimit-Remaining',
+	// 		'4796',
+	// 		'X-RateLimit-Reset',
+	// 		'1581397678',
+	// 		'Access-Control-Expose-Headers',
+	// 		'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type',
+	// 		'Access-Control-Allow-Origin',
+	// 		'*',
+	// 		'Strict-Transport-Security',
+	// 		'max-age=31536000; includeSubdomains; preload',
+	// 		'X-Frame-Options',
+	// 		'deny',
+	// 		'X-Content-Type-Options',
+	// 		'nosniff',
+	// 		'X-XSS-Protection',
+	// 		'1; mode=block',
+	// 		'Referrer-Policy',
+	// 		'origin-when-cross-origin, strict-origin-when-cross-origin',
+	// 		'Content-Security-Policy',
+	// 		"default-src 'none'",
+	// 		'Vary',
+	// 		'Accept-Encoding, Accept',
+	// 		'Content-Encoding',
+	// 		'gzip',
+	// 		'X-GitHub-Request-Id',
+	// 		'A4B1:670C:2A0C7F:50193C:5E42313F'
+	// 	]);
+
+	// nock('https://api.github.com:443', {
+	// 		"encodedQueryParams": true
+	// 	})
+	// 	.put('/repos/lucaju/misc/contents/text.txt', {
+	// 		"message": "some commit message",
+	// 		"sha": "9fa3ec5f93e21b52d9d7fda29dfc4b3d43932400",
+	// 		"branch": "dev",
+	// 		"content": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPFRFSSB4bWxucz0iaHR0cDovL3d3dy50ZWktYy5vcmcvbnMvMS4wIiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiIHhtbG5zOmN3PSJodHRwOi8vY3dyYy5jYS9ucy9jdyMiIHhtbG5zOnc9Imh0dHA6Ly9jd3JjdGMuYXJ0c3JuLnVhbGJlcnRhLmNhLyMiPgogIDx0ZWlIZWFkZXI+CiAgICA8ZmlsZURlc2M+CiAgICAgIDx0aXRsZVN0bXQ+CiAgICAgICAgPHRpdGxlPlNhbXBsZSBEb2N1bWVudCBUaXRsZSB0ZXN0IHVuZGVmaW5lZDwvdGl0bGU+CiAgICAgIDwvdGl0bGVTdG10PgogICAgICA8cHVibGljYXRpb25TdG10PgogICAgICAgIDxwPjwvcD4KICAgICAgPC9wdWJsaWNhdGlvblN0bXQ+CiAgICAgIDxzb3VyY2VEZXNjIHNhbWVBcz0iaHR0cDovL3d3dy5jd3JjLmNhIj4KICAgICAgICA8cD5DcmVhdGVkIGZyb20gb3JpZ2luYWwgcmVzZWFyY2ggYnkgbWVtYmVycyBvZiBDV1JDL0NTw4lDIHVubGVzcyBvdGhlcndpc2Ugbm90ZWQuPC9wPgogICAgICA8L3NvdXJjZURlc2M+CiAgICA8L2ZpbGVEZXNjPgogIDwvdGVpSGVhZGVyPgogIDx0ZXh0PgogICAgPGJvZHk+CiAgICAgIDxkaXYgdHlwZT0ibGV0dGVyIj4KICAgICAgICA8aGVhZD4KICAgICAgICAgIDx0aXRsZT5TYW1wbGUgTGV0dGVyIC0gQmVydHJhbmQgUnVzc2VsbCB0byA8cGVyc05hbWUgYW5ub3RhdGlvbklkPSJlbnRfNzMiIGNlcnQ9InByb2JhYmxlIiByZWY9IjI3OTM5OTM5OSI+UGF0cmljaWEgU3BlbmNlPC9wZXJzTmFtZT4gLSBPY3RvYmVyIDIxLCAxOTM1PC90aXRsZT4KICAgICAgICA8L2hlYWQ+CiAgICAgICAgPG9wZW5lcj4KICAgICAgICAgIDxub3RlPgogICAgICAgICAgICA8cD5CYWQgd3JpdGluZyBkdWUgdG8gc2hha3kgdHJhaW48L3A+PHA+SW4gdHJhaW48L3A+PHA+CiAgICAgICAgICAgICAgPHBsYWNlTmFtZSBhbm5vdGF0aW9uSWQ9ImVudF8xNDMiIGNlcnQ9ImRlZmluaXRlIiByZWY9Imh0dHA6Ly93d3cuZ2VvbmFtZXMub3JnLzY0NTMzNjYiPk9zbG88L3BsYWNlTmFtZT4gdG8gQmVyZ2VuPC9wPgogICAgICAgICAgPC9ub3RlPgogICAgICAgICAgPGRhdGVsaW5lPgogICAgICAgICAgICA8ZGF0ZSBhbm5vdGF0aW9uSWQ9ImVudF82OSIgY2VydD0iZGVmaW5pdGUiIHdoZW49IjE5MzUtMTAtMjEiPjIxLjEwLjM1PC9kYXRlPgogICAgICAgICAgPC9kYXRlbGluZT4KICAgICAgICAgIDxzYWx1dGU+RGVhcmVzdCAtPC9zYWx1dGU+CiAgICAgICAgPC9vcGVuZXI+PHA+SSBoYXZlIGhhZCBubzxub3RlIGFubm90YXRpb25JZD0iZW50XzE5MCIgdHlwZT0icmVzZWFyY2hOb3RlIj4KICAgICAgICAgICAgICAgIDxwIHhtbG5zPSJodHRwOi8vd3d3LnRlaS1jLm9yZy9ucy8xLjAiPlNvbWUga2luZCBvZiBub3RlPC9wPgogICAgICAgICAgICA8L25vdGU+IGxldHRlciBmcm9tIHlvdSBzaW5jZSBJIGxlZnQgPHBsYWNlTmFtZSBhbm5vdGF0aW9uSWQ9ImVudF8xNDUiIG9mZnNldElkPSJlbnRfMTQ1IiBjZXJ0PSJkZWZpbml0ZSIgcmVmPSJodHRwOi8vd3d3Lmdlb25hbWVzLm9yZy8yNjczNzIyIj5TdG9ja2hvbG08L3BsYWNlTmFtZT4sIGJ1dCBJIGhhZCBhIG5pY2Ugb25lIGZyb20gSm9obiBpbiBhbiBlbnZlbG9wZSB5b3UgaGFkIHNlbnQgaGltLiBJIGhhZCBzZW50IGhpbSBvbmUgYWRkcmVzc2VkIHRvIENvcGVuaGFnZW4gYnV0IGhlIGhhZG4ndCB1c2VkIGl0LjwvcD48cD5XaGVuIEkgcmVhY2hlZCBPc2xvIHllc3RlcmRheSBldmVuaW5nLCBCcnluanVsZiBCdWxsIHNob3VsZCBoYXZlIGJlZW4gdGhlcmUgdG8gbWVldCBtZSwgYnV0IHdhc24ndC4gSGUgaXMgbm90IG9uIHRoZSB0ZWxlcGhvbmUsIHNvIEkgdG9vayBhIHRheGkgdG8gaGlzIGFkZHJlc3MsIHdoaWNoIHR1cm5lZCBvdXQgdG8gYmUgYSBzdHVkZW50cycgY2x1YiB3aXRoIG5vIG9uZSBhYm91dCBvbiBTdW5kYXlzLCBzbyBJIHdlbnQgdG8gYSBob3RlbCBmZWVsaW5nIHJhdGhlciBub24tcGx1c3NlZC4gQnV0IHByZXNlbnRseSBoZSB0dXJuZWQgdXAuIEhlIGhhZCBnb3QgdGhlIDxwYiBuPSIyIj48L3BiPiB0aW1lIG9mIG15IGFycml2YWwgd3JvbmcsIGFuZCAKICAgICAgICAgICAgPGNob2ljZSBhbm5vdGF0aW9uSWQ9ImVudF82NSI+PHNpYyBhbm5vdGF0aW9uSWQ9ImVudF82NSI+d2hlbjwvc2ljPjxjb3JyIGFubm90YXRpb25JZD0iZW50XzY1Ij53aGVuPC9jb3JyPjwvY2hvaWNlPgogICAgICAgICAgaGUgaGFkIGZvdW5kIGhlIGhhZCBtaXNzZWQgbWUgaGUgcGhvbmVkIHRvIGV2ZXJ5IGhvdGVsIGluIE9zbG8gdGlsbCBoZSBoaXQgb24gdGhlIHJpZ2h0IG9uZS4gSGUgbGVmdCBtZSBhdCAxMCwgYW5kIHRoZW4gSSBoYWQgdG8gZG8gYSBTdW5kYXkgUmVmZXJlZSBhcnRpY2xlLiBUb2RheSBteSBqb3VybmV5IGxhc3RzIGZyb20gOSB0aWxsIDkgLSBmb3J0dW5hdGVseSBvbmUgb2YgdGhlIG1vc3QgYmVhdXRpZnVsIHJhaWx3YXkgam91cm5leXMgaW4gdGhlIHdvcmxkLiBUb21vcnJvdyBJIGxlY3R1cmUgYXQgPHBsYWNlTmFtZSBhbm5vdGF0aW9uSWQ9ImVudF8xNDQiIGNlcnQ9ImRlZmluaXRlIiByZWY9Imh0dHA6Ly93d3cuZ2VvbmFtZXMub3JnLzY1NDg1MjgiPkJlcmdlbjwvcGxhY2VOYW1lPiB0byB0aGUgQW5nbG8tTm9yd2VnaWFuIFNvY2lldHkuIE5leHQgZGF5IEkgZ28gYmFjayB0byBPc2xvLCBsZWN0dXJlIHRoZXJlIEZyaS4gYW5kIFNhdC4gYW5kIHRoZW4gc3RhcnQgZm9yIGhvbWUgdmlhIEJlcmdlbi48L3A+CiAgICAgICAgPHBiIG49IjMiPjwvcGI+CiAgICAgICAgPHA+QnVsbCBpcyBhIG5pY2UgeW91bmcgbWFuIGJ1dCBpbmNvbXBldGVudCAtIGNhbid0IHF1aXRlIHN0YW5kIHRoZSBjb21tdW5pc3RzLCBidXQgZmluZHMgdGhlIHNvY2lhbGlzdHMgdG9vIG1pbGQuPC9wPjxwPkkgYW0gdW5oYXBwaWx5IHdvbmRlcmluZyB3aGF0IHlvdSBhcmUgZmVlbGluZyBhYm91dCBtZS48L3A+CiAgICAgICAgPGNsb3Nlcj4KICAgICAgICAgIDxzYWx1dGU+SSBsb3ZlIHlvdSB2ZXJ5IG11Y2ggLTwvc2FsdXRlPgogICAgICAgICAgPHNpZ25lZD4KICAgICAgICAgICAgPHBlcnNOYW1lIHNhbWVBcz0iaHR0cDovL3d3dy5mcmVlYmFzZS5jb20vdmlldy9lbi9iZXJ0cmFuZF9ydXNzZWxsIj4KICAgICAgICAgICAgICA8cGVyc05hbWUgYW5ub3RhdGlvbklkPSJlbnRfMTA5IiBjZXJ0PSJkZWZpbml0ZSIgdHlwZT0icmVhbCIgcmVmPSJodHRwOi8vdmlhZi5vcmcvdmlhZi8zNjkyNDEzNyI+QjwvcGVyc05hbWU+CiAgICAgICAgICAgIDwvcGVyc05hbWU+CiAgICAgICAgICA8L3NpZ25lZD4KICAgICAgICA8L2Nsb3Nlcj4KICAgICAgPC9kaXY+CiAgICA8L2JvZHk+CiAgPC90ZXh0Pgo8L1RFST4K"
+	// 	})
+	// 	.reply(200, ["1f8b0800000000000003b5555d6bdb3014fd2bc5cf692ddbb26c05caf690b514e6848e4248c728b274152b93ed60c9fd48c97f9fd43425edcbe2b2815f74e57bee3df71c5f3f07bc6d2c3436183f070dab211807161eed997db4c12858335bbd8f988ab900952c019e4a9a401c95692ca8c8a460311592e3321138a1498c117210466d1c6892e47814f49d76c995b56b330e43b656674b65abbe3ce36d1d76b06e4da87bce567d582bc3c3d7d64cb8efe8", "4b07f25cc0bd83ad6cadefdee31d601da294ba2d4397f486e2b2ddab1f92ffda8c4b093d9409079017ed43a35b263e14ebd8c32bf3de40f74af36508878d7fe8d93eadbd3a5269700ceeb46a7e1baf9a012dffd5541dc921509f9a8957eea0c8d1aa6db72367d6baf62d3ad62f3e149c89124b8a9824198e4a9c109644799eb39483c851c920a23ce26e604d2be04e0997544c16e43aa6b69c6b54acaea2d9cdf5d36cc21f67f58fd562fe434d2f17697179514f571c15f32b546c6eab62f30dcf2655359d4ff5ed64f9b0a82f7471a357c5bc3877e0038dede7b6a362c201148ef7fc0e7c0836eb6dd576075be07bcf156bda938b4e6d36d031c7126aa6bc743b937eadc15bd6c505b3de99318ad1298a4fa3e806e131764f761bbc8966e1ffa0db0e5cf1bd21b02014499a932c26200811594e9238cf052e254159cea2149702a79fd3ccd732e1d1351cf71a8c614b3f1dd3d670b2d3e5641ff50bb673cbd77dc73ff70c7211c712281588305246399619c538c2792968245242d3580ac4b3cf31d8bb6e4095c1ae3b1a7bfb6b14dc43a7a4e2ccaab6f132eecee0be53c9b48151d00133fe2ae81ba3968dbbf1ff9465c36cdfb9b936bdd67e8c4f7ecdee8edbedf60f9e15b80cd7060000"], [
+	// 		'Server',
+	// 		'GitHub.com',
+	// 		'Date',
+	// 		'Tue, 11 Feb 2020 04:44:48 GMT',
+	// 		'Content-Type',
+	// 		'application/json; charset=utf-8',
+	// 		'Transfer-Encoding',
+	// 		'chunked',
+	// 		'Connection',
+	// 		'close',
+	// 		'Status',
+	// 		'200 OK',
+	// 		'X-RateLimit-Limit',
+	// 		'5000',
+	// 		'X-RateLimit-Remaining',
+	// 		'4985',
+	// 		'X-RateLimit-Reset',
+	// 		'1581397692',
+	// 		'Cache-Control',
+	// 		'private, max-age=60, s-maxage=60',
+	// 		'Vary',
+	// 		'Accept, Authorization, Cookie, X-GitHub-OTP',
+	// 		'ETag',
+	// 		'W/"4610252b4972110f01a0d923b2105b3e"',
+	// 		'X-OAuth-Scopes',
+	// 		'delete_repo, notifications, repo, user',
+	// 		'X-Accepted-OAuth-Scopes',
+	// 		'',
+	// 		'X-GitHub-Media-Type',
+	// 		'github.v3; format=json',
+	// 		'Access-Control-Expose-Headers',
+	// 		'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type',
+	// 		'Access-Control-Allow-Origin',
+	// 		'*',
+	// 		'Strict-Transport-Security',
+	// 		'max-age=31536000; includeSubdomains; preload',
+	// 		'X-Frame-Options',
+	// 		'deny',
+	// 		'X-Content-Type-Options',
+	// 		'nosniff',
+	// 		'X-XSS-Protection',
+	// 		'1; mode=block',
+	// 		'Referrer-Policy',
+	// 		'origin-when-cross-origin, strict-origin-when-cross-origin',
+	// 		'Content-Security-Policy',
+	// 		"default-src 'none'",
+	// 		'Vary',
+	// 		'Accept-Encoding, Accept',
+	// 		'Content-Encoding',
+	// 		'gzip',
+	// 		'X-GitHub-Request-Id',
+	// 		'A381:443F:16F6DA:371368:5E42313F'
+	// 	]);
+
+	// nock('https://api.github.com:443', {
+	// 		"encodedQueryParams": true
+	// 	})
+	// 	.get('/search/issues')
+	// 	.query({
+	// 		"q": "state%3Aopen%20type%3Apr%20repo%3Alucaju%2Fmisc%20head%3Adev"
+	// 	})
+	// 	.reply(200, ["1f8b0800000000000003a555ef6fda3010fd57903f539ca4a12b91aa6953bb7d82ae1bdbba4e55641c13dc3a76e61fb410f1bfef6c5254d0b4359d848462df7b777ebe7b6e905596889c2a272dcae23ee292aaaa16ccb25c33e38435289b1361186c5956c1d7cf06392d508616d6d626c398d47c5072bb70b30160b166b53258384aee1caeb8a1981be398c129eaa3b0c9add2abbc1b0960059931613ae276c9f116de60492ab6013aa8b562d2be9ef08900b8d8f2bf98b670e059d84a1c1cf099b2cf35ad9d1041515ea06c78929c8e86c928ea23a90a96fb35343ebf78bc14efe3d9c7c72f37d71fe29beb49345ed3f5e4fcdd703cfdb102ac74d58c6994a57d64b9150c50a5509a2b677a61a13757baf7e933843ae3031b2454c925c46d6b69f3c7c9307d733cdacf7e75", "f2ed7a22e8ddc56a32bd3a1eafefcf209a2c8925faf00ec3a249da2ef2a9a89216240d0de570cbff7679e64f5cea96251cd3d7f6b776f46c4fedf84285216cae84500f803c2c75bfd79f93e31d6687e7b2ec8c074c83955d3050094af79d5a72f3af36dd2b24c437d8ff412b780603fa6a567428a64540290f12aa68c258072a373354f3da7225bba8b387031ea54b22f99a74e5019c017830920ee709f1807bc9a4ee89b90534b8d67c49e8ca4ba019657c097276263b4002975dd57eecbefaf10271c1637352547ec482eb6e9e6c0f7cf736dca3f5e1aa6612c285a2f70c86a03568620c2f25830009ee00c3d67e7bd30670c5053356c9ddfecec032300eaa197017398177002551121d45c9511c4d93e32c4db224bd817cae2efe10134fa3344be177ea63a850a6a569ab7076a1740ec528cac3754382cbef930b6f2bdec6e0a1f905ef03e4edfcb278f8f661798573167c3eef62b6030ff035134b179d800181e02e67aa58c1e98daa58cfabcf6daf62c69092f9cba74ac3ddc4836873bbf90d107c20f99a070000"], [
+	// 		'Server',
+	// 		'GitHub.com',
+	// 		'Date',
+	// 		'Tue, 11 Feb 2020 04:44:48 GMT',
+	// 		'Content-Type',
+	// 		'application/json; charset=utf-8',
+	// 		'Transfer-Encoding',
+	// 		'chunked',
+	// 		'Connection',
+	// 		'close',
+	// 		'Status',
+	// 		'200 OK',
+	// 		'X-RateLimit-Limit',
+	// 		'30',
+	// 		'X-RateLimit-Remaining',
+	// 		'29',
+	// 		'X-RateLimit-Reset',
+	// 		'1581396348',
+	// 		'Cache-Control',
+	// 		'no-cache',
+	// 		'X-OAuth-Scopes',
+	// 		'delete_repo, notifications, repo, user',
+	// 		'X-Accepted-OAuth-Scopes',
+	// 		'',
+	// 		'X-GitHub-Media-Type',
+	// 		'github.v3; format=json',
+	// 		'Access-Control-Expose-Headers',
+	// 		'ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type',
+	// 		'Access-Control-Allow-Origin',
+	// 		'*',
+	// 		'Strict-Transport-Security',
+	// 		'max-age=31536000; includeSubdomains; preload',
+	// 		'X-Frame-Options',
+	// 		'deny',
+	// 		'X-Content-Type-Options',
+	// 		'nosniff',
+	// 		'X-XSS-Protection',
+	// 		'1; mode=block',
+	// 		'Referrer-Policy',
+	// 		'origin-when-cross-origin, strict-origin-when-cross-origin',
+	// 		'Content-Security-Policy',
+	// 		"default-src 'none'",
+	// 		'Vary',
+	// 		'Accept-Encoding, Accept',
+	// 		'Content-Encoding',
+	// 		'gzip',
+	// 		'X-GitHub-Request-Id',
+	// 		'A8BB:7B03:2BD4BC:5465EB:5E423140'
+	// 	]);
+
+	// nock('http://127.0.0.1:61149', {
+	// 		"encodedQueryParams": true
+	// 	})
+	// 	.put('/github/repos/lucaju/misc/pr', {
+	// 		"owner": "lucaju",
+	// 		"repo": "misc",
+	// 		"content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<TEI xmlns=\"http://www.tei-c.org/ns/1.0\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:cw=\"http://cwrc.ca/ns/cw#\" xmlns:w=\"http://cwrctc.artsrn.ualberta.ca/#\">\n  <teiHeader>\n    <fileDesc>\n      <titleStmt>\n        <title>Sample Document Title test undefined</title>\n      </titleStmt>\n      <publicationStmt>\n        <p></p>\n      </publicationStmt>\n      <sourceDesc sameAs=\"http://www.cwrc.ca\">\n        <p>Created from original research by members of CWRC/CSÉC unless otherwise noted.</p>\n      </sourceDesc>\n    </fileDesc>\n  </teiHeader>\n  <text>\n    <body>\n      <div type=\"letter\">\n        <head>\n          <title>Sample Letter - Bertrand Russell to <persName annotationId=\"ent_73\" cert=\"probable\" ref=\"279399399\">Patricia Spence</persName> - October 21, 1935</title>\n        </head>\n        <opener>\n          <note>\n            <p>Bad writing due to shaky train</p><p>In train</p><p>\n              <placeName annotationId=\"ent_143\" cert=\"definite\" ref=\"http://www.geonames.org/6453366\">Oslo</placeName> to Bergen</p>\n          </note>\n          <dateline>\n            <date annotationId=\"ent_69\" cert=\"definite\" when=\"1935-10-21\">21.10.35</date>\n          </dateline>\n          <salute>Dearest -</salute>\n        </opener><p>I have had no<note annotationId=\"ent_190\" type=\"researchNote\">\n                <p xmlns=\"http://www.tei-c.org/ns/1.0\">Some kind of note</p>\n            </note> letter from you since I left <placeName annotationId=\"ent_145\" offsetId=\"ent_145\" cert=\"definite\" ref=\"http://www.geonames.org/2673722\">Stockholm</placeName>, but I had a nice one from John in an envelope you had sent him. I had sent him one addressed to Copenhagen but he hadn't used it.</p><p>When I reached Oslo yesterday evening, Brynjulf Bull should have been there to meet me, but wasn't. He is not on the telephone, so I took a taxi to his address, which turned out to be a students' club with no one about on Sundays, so I went to a hotel feeling rather non-plussed. But presently he turned up. He had got the <pb n=\"2\"></pb> time of my arrival wrong, and \n            <choice annotationId=\"ent_65\"><sic annotationId=\"ent_65\">when</sic><corr annotationId=\"ent_65\">when</corr></choice>\n          he had found he had missed me he phoned to every hotel in Oslo till he hit on the right one. He left me at 10, and then I had to do a Sunday Referee article. Today my journey lasts from 9 till 9 - fortunately one of the most beautiful railway journeys in the world. Tomorrow I lecture at <placeName annotationId=\"ent_144\" cert=\"definite\" ref=\"http://www.geonames.org/6548528\">Bergen</placeName> to the Anglo-Norwegian Society. Next day I go back to Oslo, lecture there Fri. and Sat. and then start for home via Bergen.</p>\n        <pb n=\"3\"></pb>\n        <p>Bull is a nice young man but incompetent - can't quite stand the communists, but finds the socialists too mild.</p><p>I am unhappily wondering what you are feeling about me.</p>\n        <closer>\n          <salute>I love you very much -</salute>\n          <signed>\n            <persName sameAs=\"http://www.freebase.com/view/en/bertrand_russell\">\n              <persName annotationId=\"ent_109\" cert=\"definite\" type=\"real\" ref=\"http://viaf.org/viaf/36924137\">B</persName>\n            </persName>\n          </signed>\n        </closer>\n      </div>\n    </body>\n  </text>\n</TEI>\n",
+	// 		"message": "some commit message",
+	// 		"title": "a title for the pull request",
+	// 		"branch": "dev",
+	// 		"path": "text.txt"
+	// 	})
+	// 	.reply(200, {
+	// 		"owner": "lucaju",
+	// 		"repo": "misc",
+	// 		"path": "text.txt",
+	// 		"content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<TEI xmlns=\"http://www.tei-c.org/ns/1.0\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:cw=\"http://cwrc.ca/ns/cw#\" xmlns:w=\"http://cwrctc.artsrn.ualberta.ca/#\">\n  <teiHeader>\n    <fileDesc>\n      <titleStmt>\n        <title>Sample Document Title test undefined</title>\n      </titleStmt>\n      <publicationStmt>\n        <p></p>\n      </publicationStmt>\n      <sourceDesc sameAs=\"http://www.cwrc.ca\">\n        <p>Created from original research by members of CWRC/CSÉC unless otherwise noted.</p>\n      </sourceDesc>\n    </fileDesc>\n  </teiHeader>\n  <text>\n    <body>\n      <div type=\"letter\">\n        <head>\n          <title>Sample Letter - Bertrand Russell to <persName annotationId=\"ent_73\" cert=\"probable\" ref=\"279399399\">Patricia Spence</persName> - October 21, 1935</title>\n        </head>\n        <opener>\n          <note>\n            <p>Bad writing due to shaky train</p><p>In train</p><p>\n              <placeName annotationId=\"ent_143\" cert=\"definite\" ref=\"http://www.geonames.org/6453366\">Oslo</placeName> to Bergen</p>\n          </note>\n          <dateline>\n            <date annotationId=\"ent_69\" cert=\"definite\" when=\"1935-10-21\">21.10.35</date>\n          </dateline>\n          <salute>Dearest -</salute>\n        </opener><p>I have had no<note annotationId=\"ent_190\" type=\"researchNote\">\n                <p xmlns=\"http://www.tei-c.org/ns/1.0\">Some kind of note</p>\n            </note> letter from you since I left <placeName annotationId=\"ent_145\" offsetId=\"ent_145\" cert=\"definite\" ref=\"http://www.geonames.org/2673722\">Stockholm</placeName>, but I had a nice one from John in an envelope you had sent him. I had sent him one addressed to Copenhagen but he hadn't used it.</p><p>When I reached Oslo yesterday evening, Brynjulf Bull should have been there to meet me, but wasn't. He is not on the telephone, so I took a taxi to his address, which turned out to be a students' club with no one about on Sundays, so I went to a hotel feeling rather non-plussed. But presently he turned up. He had got the <pb n=\"2\"></pb> time of my arrival wrong, and \n            <choice annotationId=\"ent_65\"><sic annotationId=\"ent_65\">when</sic><corr annotationId=\"ent_65\">when</corr></choice>\n          he had found he had missed me he phoned to every hotel in Oslo till he hit on the right one. He left me at 10, and then I had to do a Sunday Referee article. Today my journey lasts from 9 till 9 - fortunately one of the most beautiful railway journeys in the world. Tomorrow I lecture at <placeName annotationId=\"ent_144\" cert=\"definite\" ref=\"http://www.geonames.org/6548528\">Bergen</placeName> to the Anglo-Norwegian Society. Next day I go back to Oslo, lecture there Fri. and Sat. and then start for home via Bergen.</p>\n        <pb n=\"3\"></pb>\n        <p>Bull is a nice young man but incompetent - can't quite stand the communists, but finds the socialists too mild.</p><p>I am unhappily wondering what you are feeling about me.</p>\n        <closer>\n          <salute>I love you very much -</salute>\n          <signed>\n            <persName sameAs=\"http://www.freebase.com/view/en/bertrand_russell\">\n              <persName annotationId=\"ent_109\" cert=\"definite\" type=\"real\" ref=\"http://viaf.org/viaf/36924137\">B</persName>\n            </persName>\n          </signed>\n        </closer>\n      </div>\n    </body>\n  </text>\n</TEI>\n",
+	// 		"branch": "dev",
+	// 		"message": "some commit message",
+	// 		"title": "a title for the pull request",
+	// 		"sha": "9fa3ec5f93e21b52d9d7fda29dfc4b3d43932400"
+	// 	}, [
+	// 		'X-Powered-By',
+	// 		'Express',
+	// 		'Access-Control-Allow-Origin',
+	// 		'https://localhost',
+	// 		'Access-Control-Allow-Methods',
+	// 		'GET,PUT,POST,OPTIONS,DELETE',
+	// 		'Access-Control-Allow-Headers',
+	// 		'cwrc-token, Content-Type',
+	// 		'Access-Control-Allow-Credentials',
+	// 		'true',
+	// 		'Content-Type',
+	// 		'application/json; charset=utf-8',
+	// 		'Content-Length',
+	// 		'3705',
+	// 		'ETag',
+	// 		'W/"e79-Dv59m9At1naI1vVUpNzNKHlnMFk"',
+	// 		'Date',
+	// 		'Tue, 11 Feb 2020 04:44:49 GMT',
+	// 		'Connection',
+	// 		'close'
+	// 	]);
 
 }
 
