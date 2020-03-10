@@ -137,10 +137,11 @@ router.get('/callback', async (req, res, next) => {
 
 	const uri = `https://github.com/login/oauth/access_token${params}`;
 
-	const body = await got(uri).json()
+	const body = await got(uri)
+		.json()
 		.catch( error =>  {
-		res.send(error.message);
-	})
+			res.send(error.message);
+		})
 
 	const githubOauthToken = body.access_token;
 	cwrcGit.authenticate(githubOauthToken);
