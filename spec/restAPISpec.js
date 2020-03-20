@@ -174,35 +174,35 @@ describe('CWRCWriter Server Side API', () => {
 	})
 
 	// save doc in branch and issue pull request
-	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/pr', () => {
+	// describe.skip('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/pr', () => {
 
-		const data = {
-			owner: fixtures.owner,
-			repo: fixtures.testRepo,
-			content: fixtures.testDoc,
-			message: 'some commit message',
-			title: 'a title for the pull request',
-			branch: 'dev',
-			path: 'text.txt'
-		}
+	// 	const data = {
+	// 		owner: fixtures.owner,
+	// 		repo: fixtures.testRepo,
+	// 		content: fixtures.testDoc,
+	// 		message: 'some commit message',
+	// 		title: 'a title for the pull request',
+	// 		branch: 'dev',
+	// 		path: 'text.txt'
+	// 	}
 
-		beforeEach( () => {
-			prMocks()
-		});
+	// 	beforeEach( () => {
+	// 		prMocks()
+	// 	});
 
-		it('returns correctly', (done) => {
+	// 	it('returns correctly', (done) => {
 
-			chai.request(server)
-				.put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/pr`)
-				.set('cwrc-token', fixtures.githubToken)
-				.send(data)
-				.end((err, res) => {
-					res.should.have.status(200);
-					res.body.sha.should.exist
-					done();
-				});
-		}).timeout(9000);
-	});
+	// 		chai.request(server)
+	// 			.put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/pr`)
+	// 			.set('cwrc-token', fixtures.githubToken)
+	// 			.send(data)
+	// 			.end((err, res) => {
+	// 				res.should.have.status(200);
+	// 				res.body.sha.should.exist
+	// 				done();
+	// 			});
+	// 	}).timeout(9000);
+	// });
 
 	// get details for authenticated user
 	describe('GET github/users', () => {

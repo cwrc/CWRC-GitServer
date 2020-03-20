@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({limit: '50mb',extended: true}));
 app.use(cookieParser());
 
 app.use(`${config.gitserver_root_prefix}/github`, github);
-app.use('/schema', schemaRouter);
+app.use(`${config.gitserver_root_prefix}/schema`, schemaRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
