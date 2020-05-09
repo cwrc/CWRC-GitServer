@@ -1,6 +1,6 @@
 # CWRC-GitServer
 
-FROM node:13.8.0
+FROM node:14.2.0
 
 WORKDIR /apps/CWRC-GitServer
 
