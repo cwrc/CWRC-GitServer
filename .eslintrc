@@ -25,7 +25,6 @@
     "no-extra-boolean-cast": 0,
     "no-unused-vars": 2,
     "new-cap": 0,
-    "camelcase": 2,
     "semi": ["error", "always"],
     "require-await": ["error"]
   }
