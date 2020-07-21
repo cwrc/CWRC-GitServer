@@ -2,7 +2,7 @@ module.exports = {
 	apps: [
 		{
 			name: 'cwrc-gitserver',
-            script: './server/index.mjs',
+            script: './bin/www',
             args: '--no-daemon',
 			env: {
 				NODE_ENV: 'production',
