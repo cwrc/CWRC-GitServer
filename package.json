@@ -35,10 +35,10 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
-    "cwrcgit": "^5.0.1",
+    "cwrcgit": "^5.0.2",
     "debug": "^4.1.1",
     "express": "^4.17.1",
-    "got": "^11.1.4",
+    "got": "^11.5.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0"
   },
@@ -46,16 +46,16 @@
     "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "codecov": "^3.7.0",
+    "codecov": "^3.7.2",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
-    "eslint": "^7.0.0",
+    "eslint": "^7.5.0",
     "husky": "^4.2.5",
-    "jsdoc-to-markdown": "^5.0.3",
-    "mocha": "^7.1.2",
-    "nock": "^12.0.3",
+    "jsdoc-to-markdown": "^6.0.1",
+    "mocha": "^8.0.1",
+    "nock": "^13.0.2",
     "nodemon": "^2.0.4",
-    "nyc": "^15.0.1"
+    "nyc": "^15.1.0"
   },
   "config": {
     "commitizen": {

@@ -1,6 +1,6 @@
 # CWRC-GitServer
 
-FROM node:14.2.0
+FROM node:14.5.0
 
 WORKDIR /apps/CWRC-GitServer
 
@@ -10,6 +10,6 @@ COPY . .
 
 RUN npm install
 
-CMD ["pm2", "start", "./bin/www", "--no-daemon"]
+CMD ["pm2-runtime", "ecosystem.config.js"]
 
 EXPOSE 3000
