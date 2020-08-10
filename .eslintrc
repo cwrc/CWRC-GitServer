@@ -1,31 +1,30 @@
 {
   "env": {
     "browser": true,
-    "node": true,
     "es6": true,
-    "mocha": true
+    "mocha": true,
+    "node": true
   },
   "ecmaFeatures": {
     "modules": true
   },
   "extends": "eslint:recommended",
-  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
   "rules": {
-    "quotes": [2, "single"],
-    "eol-last": 0,
-    "no-debugger": 1,
-    "no-mixed-requires": 0,
-    "no-underscore-dangle": 0,
-    "no-multi-spaces": 0,
-    "no-trailing-spaces": 0,
-    "no-extra-boolean-cast": 0,
-    "no-unused-vars": 2,
+    "indent": ["warn", "tab"],
     "new-cap": 0,
-    "semi": ["error", "always"],
-    "require-await": ["error"]
+    "no-debugger": 1,
+    "no-extra-boolean-cast": 0,
+    "no-mixed-requires": 0,
+    "no-multi-spaces": 1,
+    "no-trailing-spaces": 1,
+    "no-underscore-dangle": 1,
+    "no-unused-vars": 2,
+    "quotes": [2, "single"],
+    "require-await": ["error"],
+    "semi": ["error", "always"]
   }
 }
