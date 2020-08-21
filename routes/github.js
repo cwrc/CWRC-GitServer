@@ -216,9 +216,31 @@ router.put('/repos/:owner/:repo/doc', ({ params: { owner, repo }, body }, res) =
  * @param {String} req.body.title The pull request title
  * @param {String} [req.body.sha] The commit SHA
  */
-router.put('/repos/:owner/:repo/pr', ({ params: { owner, repo }, body }, res) => {
-	const { path, content, branch, message, title, sha } = body;
-	res.handlePromise(cwrcGit.saveAsPullRequest(owner, repo, path, content, branch, message, title, sha));
+router.post('/repos/:owner/:repo/pr', ({ params: { owner, repo }, body }, res) => {
+	res.handlePromise(cwrcGit.saveAsPullRequest({ ...body, owner, repo }));
+});
+
+/**
+ * Create a fork for the authenticated user
+ *
+ * @name put/repos/:owner/:repo/pr
+ * @function
+ * @memberof module:routes/github~router
+ * @param {Object} req The request
+ * @param {String} req.params.owner The repo owner
+ * @param {String} req.params.repo The repo name
+ * @param {String} [req.body.organization] The organization
+ */
+router.post('/repos/:owner/:repo/forks', ({ params: { owner, repo }, body }, res) => {
+	// const fork = { owner, repo, organization: body.organization};
+	// if (body.organization) fork.organization = body.organization;
+	res.handlePromise(
+		cwrcGit.createFork({
+			owner,
+			repo,
+			organization: body.organization,
+		})
+	);
 });
 
 /**
@@ -330,6 +352,20 @@ router.get('/repos/:owner/:repo/full', ({ params: { owner, repo } }, res) => {
  */
 router.get('/orgs/:org', ({ params: { org } }, res) => {
 	res.handlePromise(cwrcGit.getDetailsForOrg(org));
+});
+
+/**
+ * Get organization membership for a user
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getMembershipForUser}
+ * @name get/orgs/:org/memberships/:username
+ * @function
+ * @memberof module:routes/github~router
+ * @param {Object} req The request
+ * @param {String} req.params.org The organization
+ * @param {String} req.params.username The username
+ */
+router.get('/orgs/:org/memberships/:username', ({ params: { org, username } }, res) => {
+	res.handlePromise(cwrcGit.getMembershipForUser({ org, username }));
 });
 
 /**
