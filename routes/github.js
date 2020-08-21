@@ -128,7 +128,7 @@ router.get('/callback', async (req, res) => {
 	if (!req.query.code) return; // do something here, although this shouldn't ever be the case.
 
 	const code = req.query.code;
-	const params =`?code=${code}&client_id=${getGithubClientId()}&client_secret=${getGithubClientSecret()}`;
+	const params = `?code=${code}&client_id=${getGithubClientId()}&client_secret=${getGithubClientSecret()}`;
 
 	const uri = `https://github.com/login/oauth/access_token${params}`;
 
@@ -157,7 +157,7 @@ router.get('/callback', async (req, res) => {
  * @param {String} req.query.path The document path
  */
 router.get('/repos/:owner/:repo/contents', ({ params: { owner, repo }, query: { branch, path } }, res) => {
-	res.handlePromise(cwrcGit.getDoc(owner, repo, branch, path));
+	res.handlePromise(cwrcGit.getDoc({ owner, repo, path, ref: branch }));
 });
 
 /**
@@ -176,7 +176,7 @@ router.post('/user/repos', ({ body }, res) => {
 	if (!repo) {
 		res.status(422).send('You need at least a name for your document!');
 	} else {
-		res.handlePromise(cwrcGit.createRepo(repo, description, isPrivate));
+		res.handlePromise(cwrcGit.createRepo({ repo, description, isPrivate }));
 	}
 });
 
@@ -197,7 +197,7 @@ router.post('/user/repos', ({ body }, res) => {
  */
 router.put('/repos/:owner/:repo/doc', ({ params: { owner, repo }, body }, res) => {
 	const { path, content, branch, message, sha } = body;
-	res.handlePromise(cwrcGit.saveDoc(owner, repo, path, content, branch, message, sha));
+	res.handlePromise(cwrcGit.saveDoc({ owner, repo, path, content, branch, message, sha }));
 });
 
 /**
@@ -287,7 +287,7 @@ router.get('/users/:username/repos', ({ params: { username }, query: { page = 1,
  * @param {String} req.params.username The username
  */
 router.get('/repos/:owner/:repo/collaborators/:username/permission', ({ params: { owner, repo, username } }, res) => {
-	res.handlePromise(cwrcGit.getPermissionsForUser(owner, repo, username));
+	res.handlePromise(cwrcGit.getPermissionsForUser({ owner, repo, username }));
 });
 
 /**
@@ -301,7 +301,7 @@ router.get('/repos/:owner/:repo/collaborators/:username/permission', ({ params: 
  * @param {String} req.params.repo The repo name
  */
 router.get('/repos/:owner/:repo', ({ params: { owner, repo } }, res) => {
-	res.handlePromise(cwrcGit.getRepoContents(owner, repo));
+	res.handlePromise(cwrcGit.getRepoContents({ owner, repo }));
 });
 
 /**
@@ -349,7 +349,7 @@ router.post('/orgs/:org/repos', ({ params: { org }, body }, res) => {
 	if (!repo) {
 		res.status(422).send('You need at least a name for your document!');
 	} else {
-		res.handlePromise(cwrcGit.createOrgRepo(org, repo, description, isPrivate));
+		res.handlePromise(cwrcGit.createOrgRepo({ org, repo, description, isPrivate }));
 	}
 });
 
