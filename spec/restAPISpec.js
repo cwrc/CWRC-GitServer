@@ -1,11 +1,11 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const server = require('../app.js');
-const fixtures = require('../fixturesAndMocks/fixtures.js');
-const mocks = require('../fixturesAndMocks/mocks.js');
-const repoFullMocks = require('../fixturesAndMocks/repoFullMocks.js')
-const prMocks = require('../fixturesAndMocks/prMocks.js')
+const server = require('../app');
+const fixtures = require('../fixturesAndMocks/fixtures');
+const mocks = require('../fixturesAndMocks/mocks');
+const repoFullMocks = require('../fixturesAndMocks/repoFullMocks');
+// const prMocks = require('../fixturesAndMocks/prMocks');
 
 chai.should();
 chai.use(chaiHttp);
@@ -18,12 +18,11 @@ chai.use(chaiHttp);
 // nock.recorder.rec();
 
 describe('CWRCWriter Server Side API', () => {
-
 	// get repo contents using Github recursive option
 	describe('GET /repos/:owner/:repo', () => {
-		beforeEach( () => {
-			mocks.getRepoGetTree()
-			mocks.masterBranchSHAs()
+		beforeEach(() => {
+			mocks.getRepoGetTree();
+			mocks.masterBranchSHAs();
 		});
 
 		it('returns status code 200', (done) => {
@@ -39,8 +38,8 @@ describe('CWRCWriter Server Side API', () => {
 
 	// get repo contents by 'manually' drilling down through subdirs
 	describe('GET github/repos/:owner/:repo/full', () => {
-		beforeEach( () => {
-			repoFullMocks()
+		beforeEach(() => {
+			repoFullMocks();
 		});
 
 		it('returns status code 200', (done) => {
@@ -52,13 +51,12 @@ describe('CWRCWriter Server Side API', () => {
 					done();
 				});
 		});
-	})
+	});
 
 	// get doc
 	describe('GET github/repos/${fixtures.owner}/${fixtures.testRepo}/contents', () => {
-
-		beforeEach( () => {
-			mocks.getDoc()
+		beforeEach(() => {
+			mocks.getDoc();
 		});
 
 		it('returns status code 200', (done) => {
@@ -67,7 +65,7 @@ describe('CWRCWriter Server Side API', () => {
 				.set('cwrc-token', fixtures.githubToken)
 				.query({
 					branch: 'dev',
-					path: 'text.txt'
+					path: 'text.txt',
 				})
 				.end((err, res) => {
 					res.should.have.status(200);
@@ -78,8 +76,7 @@ describe('CWRCWriter Server Side API', () => {
 
 	// get repos for given user
 	describe('GET github/${fixtures.owner}/repos', () => {
-
-		beforeEach( () => {
+		beforeEach(() => {
 			mocks.getReposForGithubUserNock();
 		});
 
@@ -97,8 +94,7 @@ describe('CWRCWriter Server Side API', () => {
 
 	// get repos for authenticated user
 	describe('GET github/user/repos', () => {
-
-		beforeEach( () => {
+		beforeEach(() => {
 			mocks.getReposForAuthenticatedUserNock();
 		});
 
@@ -116,14 +112,13 @@ describe('CWRCWriter Server Side API', () => {
 
 	// create new repo
 	describe('POST /user/repos', () => {
-
 		const data = {
 			repo: fixtures.testRepo,
 			isPrivate: fixtures.isPrivate,
-			description: fixtures.testRepoDescription
+			description: fixtures.testRepoDescription,
 		};
 
-		beforeEach( () => {
+		beforeEach(() => {
 			mocks.getCreateGithubRepoNock();
 		});
 
@@ -139,39 +134,36 @@ describe('CWRCWriter Server Side API', () => {
 					done();
 				});
 		}).timeout(9000);
-
 	});
 
 	// save doc
 	describe('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/doc', () => {
-
 		const data = {
 			owner: fixtures.owner,
 			repo: fixtures.testRepo,
 			content: fixtures.testDoc,
 			message: 'some commit message',
 			branch: 'dev',
-			path: 'text.txt'
-		}
+			path: 'text.txt',
+		};
 
-		beforeEach( () => {
-			mocks.saveDocExistingSHA()
-			mocks.saveDoc()
+		beforeEach(() => {
+			mocks.saveDocExistingSHA();
+			mocks.saveDoc();
 		});
 
 		it('returns correctly', (done) => {
-
 			chai.request(server)
 				.put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/doc`)
 				.set('cwrc-token', fixtures.githubToken)
 				.send(data)
 				.end((err, res) => {
 					res.should.have.status(200);
-					res.body.sha.should.exist
+					res.body.sha.should.exist;
 					done();
 				});
 		});
-	})
+	});
 
 	// save doc in branch and issue pull request
 	// describe.skip('PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/pr', () => {
@@ -206,8 +198,7 @@ describe('CWRCWriter Server Side API', () => {
 
 	// get details for authenticated user
 	describe('GET github/users', () => {
-
-		beforeEach( () => {
+		beforeEach(() => {
 			mocks.getDetailsForAuthenticatedUserNock();
 		});
 
@@ -225,8 +216,7 @@ describe('CWRCWriter Server Side API', () => {
 
 	// search
 	describe('GET github/search/code', () => {
-
-		beforeEach( () => {
+		beforeEach(() => {
 			mocks.getSearchNock();
 		});
 
@@ -235,7 +225,7 @@ describe('CWRCWriter Server Side API', () => {
 				.get('/github/search/code')
 				.set('cwrc-token', fixtures.githubToken)
 				.query({
-					q: 'test+repo:lucaju/misc'
+					q: 'test+repo:lucaju/misc',
 				})
 				.end((err, res) => {
 					res.should.have.status(200);
@@ -244,5 +234,4 @@ describe('CWRCWriter Server Side API', () => {
 				});
 		});
 	});
-
 });
