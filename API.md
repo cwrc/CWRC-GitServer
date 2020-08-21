@@ -1,36 +1,38 @@
-# routes/github
-
 <a name="module_routes/github"></a>
+
+# routes/github
 
 Module providing GitHub related routes.
 
-* [routes/github](#module_routes/github)
-  * [~router](#module_routes/github..router) : `object`
-    * [.get/authenticate()](#module_routes/github..router.get/authenticate)
-    * [.get/callback()](#module_routes/github..router.get/callback)
-    * [.get/repos/:owner/:repo/contents(req)](#module_routes/github..router.get/repos/_owner/_repo/contents)
-    * [.post/user/repos(req)](#module_routes/github..router.post/user/repos)
-    * [.put/repos/:owner/:repo/doc(req)](#module_routes/github..router.put/repos/_owner/_repo/doc)
-    * [.put/repos/:owner/:repo/pr(req)](#module_routes/github..router.put/repos/_owner/_repo/pr)
-    * [.get/users/:username(req)](#module_routes/github..router.get/users/_username)
-    * [.get/users()](#module_routes/github..router.get/users)
-    * [.get/user/repos(req)](#module_routes/github..router.get/user/repos)
-    * [.get/users/:username/repos(req)](#module_routes/github..router.get/users/_username/repos)
-    * [.get/repos/:owner/:repo/collaborators/:username/permission(req)](#module_routes/github..router.get/repos/_owner/_repo/collaborators/_username/permission)
-    * [.get/repos/:owner/:repo(req)](#module_routes/github..router.get/repos/_owner/_repo)
-    * [.get/repos/:owner/:repo/full(req)](#module_routes/github..router.get/repos/_owner/_repo/full)
-    * [.get/orgs/:org(req)](#module_routes/github..router.get/orgs/_org)
-    * [.post/orgs/:org/repos(req)](#module_routes/github..router.post/orgs/_org/repos)
-    * [.get/templates()](#module_routes/github..router.get/templates)
-    * [.get/search/code(req)](#module_routes/github..router.get/search/code)
-    * [.get/search/repositories(req)](#module_routes/github..router.get/search/repositories)
-  * [~config](#module_routes/github..config) : `object`
-  * [~handleResponsePromise(req, res, next)](#module_routes/github..handleResponsePromise)
-  * [~handleAuthentication(req, res, next)](#module_routes/github..handleAuthentication)
+- [routes/github](#routesgithub)
+    - [routes/github~router : `object`](#routesgithubrouter--object)
+      - [router.get/authenticate()](#routergetauthenticate)
+      - [router.get/callback()](#routergetcallback)
+      - [router.get/repos/:owner/:repo/contents(req)](#routergetreposownerrepocontentsreq)
+      - [router.post/user/repos(req)](#routerpostuserreposreq)
+      - [router.put/repos/:owner/:repo/doc(req)](#routerputreposownerrepodocreq)
+      - [router.put/repos/:owner/:repo/pr(req)](#routerputreposownerrepoprreq)
+      - [router.put/repos/:owner/:repo/pr(req)](#routerputreposownerrepoprreq-1)
+      - [router.get/users/:username(req)](#routergetusersusernamereq)
+      - [router.get/users()](#routergetusers)
+      - [router.get/user/repos(req)](#routergetuserreposreq)
+      - [router.get/users/:username/repos(req)](#routergetusersusernamereposreq)
+      - [router.get/repos/:owner/:repo/collaborators/:username/permission(req)](#routergetreposownerrepocollaboratorsusernamepermissionreq)
+      - [router.get/repos/:owner/:repo(req)](#routergetreposownerreporeq)
+      - [router.get/repos/:owner/:repo/full(req)](#routergetreposownerrepofullreq)
+      - [router.get/orgs/:org(req)](#routergetorgsorgreq)
+      - [router.get/orgs/:org/memberships/:username(req)](#routergetorgsorgmembershipsusernamereq)
+      - [router.post/orgs/:org/repos(req)](#routerpostorgsorgreposreq)
+      - [router.get/templates()](#routergettemplates)
+      - [router.get/search/code(req)](#routergetsearchcodereq)
+      - [router.get/search/repositories(req)](#routergetsearchrepositoriesreq)
+    - [routes/github~isGithubClientCORS : `object`](#routesgithubisgithubclientcors--object)
+    - [routes/github~handleResponsePromise(req, res, next)](#routesgithubhandleresponsepromisereq-res-next)
+    - [routes/github~handleAuthentication(req, res, next)](#routesgithubhandleauthenticationreq-res-next)
 
 <a name="module_routes/github..router"></a>
 
-## routes/github~router : `object`
+### routes/github~router : `object`
 
 Express router to mount GitHub related functions on.
 
@@ -51,6 +53,7 @@ Express router to mount GitHub related functions on.
   * [.get/repos/:owner/:repo(req)](#module_routes/github..router.get/repos/_owner/_repo)
   * [.get/repos/:owner/:repo/full(req)](#module_routes/github..router.get/repos/_owner/_repo/full)
   * [.get/orgs/:org(req)](#module_routes/github..router.get/orgs/_org)
+  * [.get/orgs/:org/memberships/:username(req)](#module_routes/github..router.get/orgs/_org/memberships/_username)
   * [.post/orgs/:org/repos(req)](#module_routes/github..router.post/orgs/_org/repos)
   * [.get/templates()](#module_routes/github..router.get/templates)
   * [.get/search/code(req)](#module_routes/github..router.get/search/code)
@@ -58,11 +61,11 @@ Express router to mount GitHub related functions on.
 
 <a name="module_routes/github..router.get/authenticate"></a>
 
-### router.get/authenticate()
+#### router.get/authenticate()
 
 Route that redirects to GitHub in order to use OAuth.
 
-**Kind**: static method of [`router`](#module_routes/github..router)
+**Kind**: static method of [`router`](#module_routes/github..router)  
 <a name="module_routes/github..router.get/callback"></a>
 
 #### router.get/callback()
@@ -145,6 +148,21 @@ Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#saveAsPullRequest](ht
 | req.body.message | `String` | The commit message |
 | req.body.title | `String` | The pull request title |
 | [req.body.sha] | `String` | The commit SHA |
+
+<a name="module_routes/github..router.put/repos/_owner/_repo/pr"></a>
+
+#### router.put/repos/:owner/:repo/pr(req)
+
+Create a fork for the authenticated user
+
+**Kind**: static method of [`router`](#module_routes/github..router)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| req | `Object` | The request |
+| req.params.owner | `String` | The repo owner |
+| req.params.repo | `String` | The repo name |
+| [req.body.organization] | `String` | The organization |
 
 <a name="module_routes/github..router.get/users/_username"></a>
 
@@ -261,6 +279,21 @@ Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForOrg](htt
 | req | `Object` | The request |
 | req.params.org | `String` | The organization |
 
+<a name="module_routes/github..router.get/orgs/_org/memberships/_username"></a>
+
+#### router.get/orgs/:org/memberships/:username(req)
+
+Get organization membership for a user
+Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getMembershipForUser](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getMembershipForUser)
+
+**Kind**: static method of [`router`](#module_routes/github..router)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| req | `Object` | The request |
+| req.params.org | `String` | The organization |
+| req.params.username | `String` | The username |
+
 <a name="module_routes/github..router.post/orgs/_org/repos"></a>
 
 #### router.post/orgs/:org/repos(req)
@@ -318,11 +351,11 @@ Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#searchRepos](https://
 | [req.query.page] | `Integer` | `1` | The results page to get |
 | [req.query.per_page] | `Integer` | `10` | The number of results per page |
 
-<a name="module_routes/github..config"></a>
+<a name="module_routes/github..isGithubClientCORS"></a>
 
-### routes/github~config : `object`
+### routes/github~isGithubClientCORS : `object`
 
-The CWRC-GitServer config object, located at [https://github.com/cwrc/CWRC-GitServer/blob/master/config.json](https://github.com/cwrc/CWRC-GitServer/blob/master/config.json).
+The CWRC-GitServer config object, located at [https://github.com/cwrc/CWRC-GitServer/blob/master/config.js](https://github.com/cwrc/CWRC-GitServer/blob/master/config.js).
 
 **Kind**: inner namespace of [`routes/github`](#module_routes/github)  
 **Properties**
