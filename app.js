@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const logger = require('morgan');
 
-const config = require('./config.json');
+const config = require('./config/config.json');
 const github = require('./routes/github');
 const schemaRouter = require('./routes/schema');
 

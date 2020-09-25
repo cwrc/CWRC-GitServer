@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 const nock = require('nock');
-const config = require('../config');
+const config = require('../config/config.json');
 
 const templateMocks = () => {
 	nock('https://api.github.com:443', {

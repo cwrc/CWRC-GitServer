@@ -1,4 +1,4 @@
-const config = require('../config');
+const config = require('../config/config.json');
 const jwt = require('jsonwebtoken');
 
 const testDoc = `<?xml version="1.0" encoding="UTF-8"?>

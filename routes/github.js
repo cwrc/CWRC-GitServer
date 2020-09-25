@@ -7,7 +7,7 @@ const debug = require('debug')('cwrc-server:server');
 const express = require('express');
 const got = require('got');
 
-const config = require('../config.json');
+const config = require('../config/config.json');
 
 /**
  * Express router to mount GitHub related functions on.
