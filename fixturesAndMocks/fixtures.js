@@ -1,5 +1,5 @@
-const config = require('../config');
-const jwt    = require('jsonwebtoken');
+const config = require('../config/config.json');
+const jwt = require('jsonwebtoken');
 
 const testDoc = `<?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cw="http://cwrc.ca/ns/cw#" xmlns:w="http://cwrctc.artsrn.ualberta.ca/#">
@@ -55,12 +55,12 @@ const testDoc = `<?xml version="1.0" encoding="UTF-8"?>
 const owner = 'lucaju';
 const testRepo = 'misc';
 const ownerAndRepo = `${owner}/${testRepo}`;
-const templateName = 'Sample TEI letter.xml'
+const templateName = 'Sample TEI letter.xml';
 var versionTimestamp = Math.floor(Date.now() / 1000);
 const base64TestDoc = Buffer.from(testDoc).toString('base64');
 const annotationBundleText = 'some annotations';
 const base64AnnotationBundle = Buffer.from(annotationBundleText).toString('base64');
-const aSingleAnno = 'a single anno with timestamped uris ' + versionTimestamp;
+const aSingleAnno = `a single anno with timestamped uris ${versionTimestamp}`;
 const testRepoDescription = 'a description of the repo';
 const isPrivate = false;
 
@@ -72,9 +72,12 @@ const newCommitSHA = 'newCommitSHAForTesting';
 
 const commitMessage = 'saving cwrc draft';
 
-const cwrcJWTTokenContainingGithubOathToken = jwt.sign(config.personal_oath_for_testing, config.jwt_secret_for_testing);
- 
-const githubToken = config.personal_oath_for_testing
+const cwrcJWTTokenContainingGithubOathToken = jwt.sign(
+	config.personal_oath_for_testing,
+	config.jwt_secret_for_testing
+);
+
+const githubToken = config.personal_oath_for_testing;
 
 module.exports = {
 	testDoc,
@@ -95,5 +98,5 @@ module.exports = {
 	newCommitSHA,
 	commitMessage,
 	cwrcJWTTokenContainingGithubOathToken,
-	githubToken
-}
+	githubToken,
+};
