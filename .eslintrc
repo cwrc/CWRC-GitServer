@@ -5,26 +5,13 @@
 		"mocha": true,
 		"node": true
 	},
-	"ecmaFeatures": {
-		"modules": true
-	},
-	"extends": "eslint:recommended",
+	"extends": ["eslint:recommended", "plugin:prettier/recommended"],
 	"parserOptions": {
 		"ecmaVersion": 2020,
 		"sourceType": "module"
 	},
 	"rules": {
-		"indent": ["warn", "tab"],
-		"new-cap": 0,
-		"no-debugger": 1,
-		"no-extra-boolean-cast": 0,
-		"no-mixed-requires": 0,
-		"no-multi-spaces": 1,
-		"no-trailing-spaces": 1,
 		"no-underscore-dangle": 1,
 		"no-unused-vars": 2,
-		"quotes": [2, "single"],
-		"require-await": ["error"],
-		"semi": ["error", "always"]
 	}
 }
