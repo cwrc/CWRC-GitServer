@@ -23,13 +23,13 @@
     "url": "https://github.com/cwrc/CWRC-GitServer.git"
   },
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "test:debug": "mocha spec -w",
-    "test": "nyc mocha spec",
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "test:debug": "mocha test -w",
+    "test": "nyc mocha test",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "check-coverage": "nyc check-coverage",
-    "docs": "jsdoc2md routes/github.js > API.md",
+    "docs": "jsdoc2md ./src/routes/github.js > API.md",
     "cm": "git-cz"
   },
   "dependencies": {

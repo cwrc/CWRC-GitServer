@@ -1,4 +1,4 @@
-const config = require('../config/config.json');
+const config = require('../../config/config.json');
 const jwt = require('jsonwebtoken');
 
 const testDoc = `<?xml version="1.0" encoding="UTF-8"?>
@@ -72,31 +72,28 @@ const newCommitSHA = 'newCommitSHAForTesting';
 
 const commitMessage = 'saving cwrc draft';
 
-const cwrcJWTTokenContainingGithubOathToken = jwt.sign(
-	config.personal_oath_for_testing,
-	config.jwt_secret_for_testing
-);
+const cwrcJWTTokenContainingGithubOathToken = jwt.sign(config.personal_oath_for_testing, config.jwt_secret_for_testing);
 
 const githubToken = config.personal_oath_for_testing;
 
 module.exports = {
-	testDoc,
-	owner,
-	testRepo,
-	ownerAndRepo,
-	versionTimestamp,
-	base64TestDoc,
-	annotationBundleText,
-	base64AnnotationBundle,
-	aSingleAnno,
-	testRepoDescription,
-	isPrivate,
-	baseTreeSHA,
-	parentCommitSHA,
-	templateName,
-	newTreeSHA,
-	newCommitSHA,
-	commitMessage,
-	cwrcJWTTokenContainingGithubOathToken,
-	githubToken,
+  testDoc,
+  owner,
+  testRepo,
+  ownerAndRepo,
+  versionTimestamp,
+  base64TestDoc,
+  annotationBundleText,
+  base64AnnotationBundle,
+  aSingleAnno,
+  testRepoDescription,
+  isPrivate,
+  baseTreeSHA,
+  parentCommitSHA,
+  templateName,
+  newTreeSHA,
+  newCommitSHA,
+  commitMessage,
+  cwrcJWTTokenContainingGithubOathToken,
+  githubToken,
 };
