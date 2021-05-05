@@ -72,7 +72,10 @@ const newCommitSHA = 'newCommitSHAForTesting';
 
 const commitMessage = 'saving cwrc draft';
 
-const cwrcJWTTokenContainingGithubOathToken = jwt.sign(config.personal_oath_for_testing, config.jwt_secret_for_testing);
+const cwrcJWTTokenContainingGithubOathToken = jwt.sign(
+  config.personal_oath_for_testing,
+  config.jwt_secret_for_testing
+);
 
 const githubToken = config.personal_oath_for_testing;
 
