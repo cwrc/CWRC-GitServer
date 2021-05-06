@@ -7,7 +7,7 @@ const debug = require('debug')('cwrc-server:server');
 const express = require('express');
 const got = require('got');
 
-const config = require('../config/config.json');
+const config = require('../../config/config.json');
 
 /**
  * Express router to mount GitHub related functions on.
@@ -53,27 +53,27 @@ const getTemplatesPath = () => config.templates_path;
  * @param {Function} next Next middleware function
  */
 const handleResponsePromise = (req, res, next) => {
-	if (isGithubClientCORS()) {
-		res.header('Access-Control-Allow-Origin', getGithubClientOrigin());
-		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
-		res.header('Access-Control-Allow-Headers', 'cwrc-token, Content-Type');
-		res.header('Access-Control-Allow-Credentials', 'true');
-	}
+  if (isGithubClientCORS()) {
+    res.header('Access-Control-Allow-Origin', getGithubClientOrigin());
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
+    res.header('Access-Control-Allow-Headers', 'cwrc-token, Content-Type');
+    res.header('Access-Control-Allow-Credentials', 'true');
+  }
 
-	res.handlePromise = async (promise) => {
-		const result = await promise.catch((error) => {
-			if (error.status === 404) {
-				res.status(404).send('Not Found');
-			} else {
-				console.log('Server error:', error);
-				debug(error);
-				res.status(500).send(error);
-			}
-		});
-		res.send(result);
-	};
+  res.handlePromise = async (promise) => {
+    const result = await promise.catch((error) => {
+      if (error.status === 404) {
+        res.status(404).send('Not Found');
+      } else {
+        console.log('Server error:', error);
+        debug(error);
+        res.status(500).send(error);
+      }
+    });
+    res.send(result);
+  };
 
-	next();
+  next();
 };
 router.use(handleResponsePromise);
 
@@ -88,16 +88,16 @@ router.use(handleResponsePromise);
  * @param {Function} next Next middleware function
  */
 const handleAuthentication = (req, res, next) => {
-	const githubToken = req.headers['cwrc-token'];
-	if (githubToken) {
-		cwrcGit.authenticate(githubToken);
-		req.githubAuthenticated = true;
-		next();
-	} else {
-		req.githubAuthenticated = false;
-		next();
-	}
-	/*the above could be used later in certain routes like so:
+  const githubToken = req.headers['cwrc-token'];
+  if (githubToken) {
+    cwrcGit.authenticate(githubToken);
+    req.githubAuthenticated = true;
+    next();
+  } else {
+    req.githubAuthenticated = false;
+    next();
+  }
+  /*the above could be used later in certain routes like so:
 	if(!req.githubAuthenticated) {
 		return res.redirect('/login');
 	}
@@ -112,8 +112,8 @@ router.use(handleAuthentication);
  * @memberof module:routes/github~router
  */
 router.get('/authenticate', (req, res) => {
-	const githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${getGithubClientId()}&scope=repo&redirect_uri=${getGithubOauthCallback()}`;
-	res.redirect(githubAuthURL);
+  const githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${getGithubClientId()}&scope=repo&redirect_uri=${getGithubOauthCallback()}`;
+  res.redirect(githubAuthURL);
 });
 
 /**
@@ -125,23 +125,23 @@ router.get('/authenticate', (req, res) => {
  * @memberof module:routes/github~router
  */
 router.get('/callback', async (req, res) => {
-	if (!req.query.code) return; // do something here, although this shouldn't ever be the case.
+  if (!req.query.code) return; // do something here, although this shouldn't ever be the case.
 
-	const code = req.query.code;
-	const params = `?code=${code}&client_id=${getGithubClientId()}&client_secret=${getGithubClientSecret()}`;
+  const code = req.query.code;
+  const params = `?code=${code}&client_id=${getGithubClientId()}&client_secret=${getGithubClientSecret()}`;
 
-	const uri = `https://github.com/login/oauth/access_token${params}`;
+  const uri = `https://github.com/login/oauth/access_token${params}`;
 
-	const body = await got(uri)
-		.json()
-		.catch((error) => {
-			res.send(error.message);
-		});
+  const body = await got(uri)
+    .json()
+    .catch((error) => {
+      res.send(error.message);
+    });
 
-	const githubOauthToken = body.access_token;
-	cwrcGit.authenticate(githubOauthToken);
-	res.cookie('cwrc-token', githubOauthToken);
-	res.redirect(getAuthenticationCallbackRedirect());
+  const githubOauthToken = body.access_token;
+  cwrcGit.authenticate(githubOauthToken);
+  res.cookie('cwrc-token', githubOauthToken);
+  res.redirect(getAuthenticationCallbackRedirect());
 });
 
 /**
@@ -157,7 +157,7 @@ router.get('/callback', async (req, res) => {
  * @param {String} req.query.path The document path
  */
 router.get('/repos/:owner/:repo/contents', ({ params: { owner, repo }, query: { branch, path } }, res) => {
-	res.handlePromise(cwrcGit.getDoc({ owner, repo, path, ref: branch }));
+  res.handlePromise(cwrcGit.getDoc({ owner, repo, path, ref: branch }));
 });
 
 /**
@@ -172,12 +172,12 @@ router.get('/repos/:owner/:repo/contents', ({ params: { owner, repo }, query: { 
  * @param {Boolean} [req.body.isPrivate=false] Is the repo private?
  */
 router.post('/user/repos', ({ body }, res) => {
-	const { repo, description, isPrivate = false } = body;
-	if (!repo) {
-		res.status(422).send('You need at least a name for your document!');
-	} else {
-		res.handlePromise(cwrcGit.createRepo({ repo, description, isPrivate }));
-	}
+  const { repo, description, isPrivate = false } = body;
+  if (!repo) {
+    res.status(422).send('You need at least a name for your document!');
+  } else {
+    res.handlePromise(cwrcGit.createRepo({ repo, description, isPrivate }));
+  }
 });
 
 /**
@@ -196,8 +196,8 @@ router.post('/user/repos', ({ body }, res) => {
  * @param {String} [req.body.sha] The commit SHA
  */
 router.put('/repos/:owner/:repo/doc', ({ params: { owner, repo }, body }, res) => {
-	const { path, content, branch, message, sha } = body;
-	res.handlePromise(cwrcGit.saveDoc({ owner, repo, path, content, branch, message, sha }));
+  const { path, content, branch, message, sha } = body;
+  res.handlePromise(cwrcGit.saveDoc({ owner, repo, path, content, branch, message, sha }));
 });
 
 /**
@@ -217,7 +217,7 @@ router.put('/repos/:owner/:repo/doc', ({ params: { owner, repo }, body }, res) =
  * @param {String} [req.body.sha] The commit SHA
  */
 router.post('/repos/:owner/:repo/pr', ({ params: { owner, repo }, body }, res) => {
-	res.handlePromise(cwrcGit.saveAsPullRequest({ ...body, owner, repo }));
+  res.handlePromise(cwrcGit.saveAsPullRequest({ ...body, owner, repo }));
 });
 
 /**
@@ -232,15 +232,15 @@ router.post('/repos/:owner/:repo/pr', ({ params: { owner, repo }, body }, res) =
  * @param {String} [req.body.organization] The organization
  */
 router.post('/repos/:owner/:repo/forks', ({ params: { owner, repo }, body }, res) => {
-	// const fork = { owner, repo, organization: body.organization};
-	// if (body.organization) fork.organization = body.organization;
-	res.handlePromise(
-		cwrcGit.createFork({
-			owner,
-			repo,
-			organization: body.organization,
-		})
-	);
+  // const fork = { owner, repo, organization: body.organization};
+  // if (body.organization) fork.organization = body.organization;
+  res.handlePromise(
+    cwrcGit.createFork({
+      owner,
+      repo,
+      organization: body.organization,
+    })
+  );
 });
 
 /**
@@ -253,7 +253,7 @@ router.post('/repos/:owner/:repo/forks', ({ params: { owner, repo }, body }, res
  * @param {String} req.params.username The username
  */
 router.get('/users/:username', ({ params: { username } }, res) => {
-	res.handlePromise(cwrcGit.getDetailsForUser(username));
+  res.handlePromise(cwrcGit.getDetailsForUser(username));
 });
 
 /**
@@ -264,7 +264,7 @@ router.get('/users/:username', ({ params: { username } }, res) => {
  * @memberof module:routes/github~router
  */
 router.get('/users', (req, res) => {
-	res.handlePromise(cwrcGit.getDetailsForAuthenticatedUser());
+  res.handlePromise(cwrcGit.getDetailsForAuthenticatedUser());
 });
 
 /**
@@ -279,7 +279,7 @@ router.get('/users', (req, res) => {
  * @param {Integer} [req.query.per_page=10] The number of results per page
  */
 router.get('/user/repos', ({ query: { page = 1, per_page = 10, affiliation = 'owner' } }, res) => {
-	res.handlePromise(cwrcGit.getReposForAuthenticatedUser(affiliation, page, per_page));
+  res.handlePromise(cwrcGit.getReposForAuthenticatedUser(affiliation, page, per_page));
 });
 
 /**
@@ -294,7 +294,7 @@ router.get('/user/repos', ({ query: { page = 1, per_page = 10, affiliation = 'ow
  * @param {Integer} [req.query.per_page=10] The number of results per page
  */
 router.get('/users/:username/repos', ({ params: { username }, query: { page = 1, per_page = 10 } }, res) => {
-	res.handlePromise(cwrcGit.getReposForUser(username, page, per_page));
+  res.handlePromise(cwrcGit.getReposForUser(username, page, per_page));
 });
 
 /**
@@ -309,7 +309,7 @@ router.get('/users/:username/repos', ({ params: { username }, query: { page = 1,
  * @param {String} req.params.username The username
  */
 router.get('/repos/:owner/:repo/collaborators/:username/permission', ({ params: { owner, repo, username } }, res) => {
-	res.handlePromise(cwrcGit.getPermissionsForUser({ owner, repo, username }));
+  res.handlePromise(cwrcGit.getPermissionsForUser({ owner, repo, username }));
 });
 
 /**
@@ -323,7 +323,7 @@ router.get('/repos/:owner/:repo/collaborators/:username/permission', ({ params: 
  * @param {String} req.params.repo The repo name
  */
 router.get('/repos/:owner/:repo', ({ params: { owner, repo } }, res) => {
-	res.handlePromise(cwrcGit.getRepoContents({ owner, repo }));
+  res.handlePromise(cwrcGit.getRepoContents({ owner, repo }));
 });
 
 /**
@@ -338,7 +338,7 @@ router.get('/repos/:owner/:repo', ({ params: { owner, repo } }, res) => {
  * @param {String} req.params.repo The repo name
  */
 router.get('/repos/:owner/:repo/full', ({ params: { owner, repo } }, res) => {
-	res.handlePromise(cwrcGit.getRepoContentsByDrillDown(owner, repo));
+  res.handlePromise(cwrcGit.getRepoContentsByDrillDown(owner, repo));
 });
 
 /**
@@ -351,7 +351,7 @@ router.get('/repos/:owner/:repo/full', ({ params: { owner, repo } }, res) => {
  * @param {String} req.params.org The organization
  */
 router.get('/orgs/:org', ({ params: { org } }, res) => {
-	res.handlePromise(cwrcGit.getDetailsForOrg(org));
+  res.handlePromise(cwrcGit.getDetailsForOrg(org));
 });
 
 /**
@@ -365,7 +365,7 @@ router.get('/orgs/:org', ({ params: { org } }, res) => {
  * @param {String} req.params.username The username
  */
 router.get('/orgs/:org/memberships/:username', ({ params: { org, username } }, res) => {
-	res.handlePromise(cwrcGit.getMembershipForUser({ org, username }));
+  res.handlePromise(cwrcGit.getMembershipForUser({ org, username }));
 });
 
 /**
@@ -381,12 +381,12 @@ router.get('/orgs/:org/memberships/:username', ({ params: { org, username } }, r
  * @param {Boolean} [req.body.isPrivate=false] Is the repo private?
  */
 router.post('/orgs/:org/repos', ({ params: { org }, body }, res) => {
-	const { repo, description, isPrivate = false } = body;
-	if (!repo) {
-		res.status(422).send('You need at least a name for your document!');
-	} else {
-		res.handlePromise(cwrcGit.createOrgRepo({ org, repo, description, isPrivate }));
-	}
+  const { repo, description, isPrivate = false } = body;
+  if (!repo) {
+    res.status(422).send('You need at least a name for your document!');
+  } else {
+    res.handlePromise(cwrcGit.createOrgRepo({ org, repo, description, isPrivate }));
+  }
 });
 
 /**
@@ -397,11 +397,11 @@ router.post('/orgs/:org/repos', ({ params: { org }, body }, res) => {
  * @memberof module:routes/github~router
  */
 router.get('/templates', (req, res) => {
-	const owner = getTemplatesOwner();
-	const repo = getTemplatesRepo();
-	const ref = getTemplatesRef();
-	const path = getTemplatesPath();
-	res.handlePromise(cwrcGit.getTemplates(owner, repo, ref, path));
+  const owner = getTemplatesOwner();
+  const repo = getTemplatesRepo();
+  const ref = getTemplatesRef();
+  const path = getTemplatesPath();
+  res.handlePromise(cwrcGit.getTemplates(owner, repo, ref, path));
 });
 
 /**
@@ -416,7 +416,7 @@ router.get('/templates', (req, res) => {
  * @param {Integer} [req.query.per_page=10] The number of results per page
  */
 router.get('/search/code', ({ query: { q, page = 1, per_page = 10 } }, res) => {
-	res.handlePromise(cwrcGit.searchCode(q, page, per_page));
+  res.handlePromise(cwrcGit.searchCode(q, page, per_page));
 });
 
 /**
@@ -431,7 +431,7 @@ router.get('/search/code', ({ query: { q, page = 1, per_page = 10 } }, res) => {
  * @param {Integer} [req.query.per_page=10] The number of results per page
  */
 router.get('/search/repositories', ({ query: { q, page = 1, per_page = 10 } }, res) => {
-	res.handlePromise(cwrcGit.searchRepos(q, page, per_page));
+  res.handlePromise(cwrcGit.searchRepos(q, page, per_page));
 });
 
 module.exports = router;

@@ -23,68 +23,41 @@
     "url": "https://github.com/cwrc/CWRC-GitServer.git"
   },
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "test:debug": "mocha spec -w",
-    "test": "nyc mocha spec",
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "test:debug": "mocha test -w",
+    "test": "nyc mocha test",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "check-coverage": "nyc check-coverage",
-    "docs": "jsdoc2md routes/github.js > API.md",
-    "cm": "git-cz"
+    "docs": "jsdoc2md ./src/routes/github.js > API.md",
+    "cm": "git-cz",
+    "prepare": "husky install"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
-    "cwrcgit": "^6.0.0",
+    "cwrcgit": "github:cwrc/CWRC-Git#development",
     "debug": "^4.3.1",
     "express": "^4.17.1",
-    "got": "^11.8.0",
+    "got": "^11.8.2",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "chai": "^4.2.0",
+    "chai": "^4.3.4",
     "chai-http": "^4.3.0",
-    "codecov": "^3.8.1",
-    "commitizen": "^4.2.2",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.14.0",
-    "git-cz": "^4.7.5",
-    "husky": "^4.3.0",
-    "jsdoc-to-markdown": "^6.0.1",
-    "mocha": "^8.2.1",
-    "nock": "^13.0.5",
-    "nodemon": "^2.0.6",
-    "nyc": "^15.1.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run test && npm run check-coverage"
-    }
-  },
-  "nyc": {
-    "check-coverage": true,
-    "per-file": true,
-    "exclude": [
-      "coverage/**",
-      "fixturesAndMocks/**",
-      "node_modules/**"
-    ],
-    "include": [
-      "spec/**"
-    ],
-    "lines": 5,
-    "statements": 5,
-    "functions": 5,
-    "branches": 5,
-    "reporter": [
-      "lcov"
-    ]
+    "codecov": "^3.8.2",
+    "commitizen": "^4.2.3",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "git-cz": "^4.7.6",
+    "husky": "^6.0.0",
+    "jsdoc-to-markdown": "^7.0.1",
+    "mocha": "^8.3.2",
+    "nock": "^13.0.11",
+    "nodemon": "^2.0.7",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.1"
   }
 }

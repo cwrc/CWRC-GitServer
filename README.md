@@ -48,7 +48,7 @@ Install pm2 to run Express.js as a service:
 ```bash
 sudo npm install pm2 -g
 cd ~/cwrcserver
-pm2 start ./bin/www
+pm2 start ./src/index.js
 ```
 
 ### OAuth

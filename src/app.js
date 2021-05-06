@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const logger = require('morgan');
 
-const config = require('./config/config.json');
+const config = require('../config/config.json');
 const github = require('./routes/github');
 const schemaRouter = require('./routes/schema');
 
@@ -19,9 +19,9 @@ app.use(`${config.gitserver_root_prefix}/schema`, schemaRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-	const err = new Error('Not Found');
-	err.status = 404;
-	next(err);
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // error handlers
@@ -29,17 +29,17 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-	app.use((err, req, res) => {
-		res.status(err.status || 500);
-		res.end(`<div>Error: ${err.message} and stack trace: ${err}</div>`);
-	});
+  app.use((err, req, res) => {
+    res.status(err.status || 500);
+    res.end(`<div>Error: ${err.message} and stack trace: ${err}</div>`);
+  });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use((err, req, res) => {
-	res.status(err.status || 500);
-	res.end(`<div>Error: ${err.message} and stack trace: ${err}</div>`);
+  res.status(err.status || 500);
+  res.end(`<div>Error: ${err.message} and stack trace: ${err}</div>`);
 });
 
 module.exports = app;
