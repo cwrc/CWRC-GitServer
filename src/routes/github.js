@@ -172,11 +172,11 @@ router.get('/repos/:owner/:repo/contents', ({ params: { owner, repo }, query: { 
  * @param {Boolean} [req.body.isPrivate=false] Is the repo private?
  */
 router.post('/user/repos', ({ body }, res) => {
-  const { repo, description, isPrivate = false } = body;
+  const { owner, repo, description, isPrivate = false } = body;
   if (!repo) {
     res.status(422).send('You need at least a name for your document!');
   } else {
-    res.handlePromise(cwrcGit.createRepo({ repo, description, isPrivate }));
+    res.handlePromise(cwrcGit.createRepo({ owner, repo, description, isPrivate }));
   }
 });
 
