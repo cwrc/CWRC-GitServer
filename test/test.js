@@ -116,7 +116,7 @@ describe('CWRCWriter Server Side API', () => {
   });
 
   // create new repo
-  describe('POST /user/repos', () => {
+  describe.skip('POST /user/repos', () => {
     const data = {
       repo: fixtures.testRepo,
       isPrivate: fixtures.isPrivate,
