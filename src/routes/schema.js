@@ -45,53 +45,43 @@ const loadResource = async (url) => {
 };
 
 /**
- * Get the XML Schema from a repo.
- * Calls {@ link @param req.query.url}
+ * Get the Schema's XML.
+ * Calls {@ link @param req.params.url}
  * @name get/xml
  * @function
  * @memberof module:routes/schema
  * @param {Object} req The request
- * @param {Object} req.query.url The xml schema uri
+ * @param {Object} req.params.url The xml schema uri
+ * @param {Object} res.body The schema XML
  */
-router.get('/xml', async (req, res) => {
-  const resourceURL = req.query.url;
-
-  //if there is no url, send 'no content HTTP Response'
+router.get('/xml/:url', async (req, res) => {
+  const resourceURL = req.params.url;
   if (!resourceURL) res.status(204).send();
 
-  const schema = await loadResource(resourceURL);
+  const response = await loadResource(resourceURL);
+  if (response.statusCode !== 200) res.status(204).send();
 
-  //if fetch fails, send 'No Content HTTP Response 204'
-  if (schema.statusCode !== 200) res.status(204).send();
-
-  //send xml
-  res.type('xml').status(200).send(schema.body);
+  res.type('xml').status(200).send(response.body);
 });
 
 /**
- * Get the CSS Schema from a repo.
- * Calls {@ link @param url and/or @param altUrl}
- * @name post/css
+ * Get the Schema's CSS.
+ * Calls {@ link @param req.params.url}
+ * @name get/css
  * @function
  * @memberof module:routes/schema
  * @param {Object} req The request
- * @param {Object} req.body The object containing the schema information
- * @param {String} req.body.cssUrl The primary xml schema uri
- * @param {String} req.query.altCssUrl The secundary xml schema uri
+ * @param {Object} req.params.url The xml schema uri
+ * @param {Object} res.body The schema CSS
  */
-router.get('/css', async (req, res) => {
-  const resourceURL = req.query.url;
-
-  //if there is not url, send 'no content HTTP Response'
+router.get('/css/:url', async (req, res) => {
+  const resourceURL = req.params.url;
   if (!resourceURL) res.status(204).send();
 
-  const schema = await loadResource(resourceURL);
+  const response = await loadResource(resourceURL);
+  if (response.statusCode !== 200) res.status(204).send();
 
-  //if fetch fails, send 'No Content HTTP Response 204'
-  if (schema.statusCode !== 200) res.status(204).send();
-
-  //send css
-  res.type('css').status(200).send(schema.body);
+  res.type('css').status(200).send(response.body);
 });
 
 module.exports = router;
