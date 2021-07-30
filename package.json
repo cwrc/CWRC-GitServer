@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
-    "cwrcgit": "^6.0.2",
+    "cwrcgit": "github:cwrc/CWRC-git#development",
     "debug": "^4.3.2",
     "express": "^4.17.1",
     "got": "^11.8.2",
