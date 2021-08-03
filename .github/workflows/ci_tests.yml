@@ -31,8 +31,10 @@ jobs:
       if: ${{ success() }}
       run: npm run check-coverage
     
-  tes2:
-
+  test2:
+    
+    needs: test
+    
     runs-on: ubuntu-latest
 
     strategy:
