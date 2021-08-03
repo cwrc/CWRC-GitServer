@@ -16,7 +16,7 @@ on:
 
 jobs:
 
-  run_tests_on_nodejs:
+  run tests on nodejs:
     runs-on: ubuntu-latest
 
     strategy:
@@ -37,7 +37,7 @@ jobs:
       run: npm run check-coverage
       
   docker:
-    needs: run_tests_on_nodejs
+    needs: run tests on nodejs
   
     runs-on: ubuntu-latest
     steps:
