@@ -37,7 +37,7 @@
     "cookie-parser": "^1.4.5",
     "cwrcgit": "^6.0.2",
     "debug": "^4.3.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "got": "^11.8.2",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0"
